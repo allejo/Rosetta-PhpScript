@@ -7,10 +7,15 @@
  * LICENSE.md file that was distributed with this source code.
  */
 
-namespace allejo\Rosetta\Console;
+namespace allejo\Rosetta\Babel;
 
-use Symfony\Component\Console\Application as BaseApplication;
-
-class Application extends BaseApplication
+class WithStatement extends Statement
 {
+    public $type = 'WithStatement';
+
+    /** @var Expression */
+    public $object;
+
+    /** @var Statement */
+    public $body;
 }

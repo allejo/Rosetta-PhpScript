@@ -7,10 +7,12 @@
  * LICENSE.md file that was distributed with this source code.
  */
 
-namespace allejo\Rosetta\Console;
+namespace allejo\Rosetta\Babel;
 
-use Symfony\Component\Console\Application as BaseApplication;
-
-class Application extends BaseApplication
+class SequenceExpression extends Expression
 {
+    public $type = 'SequenceExpression';
+
+    /** @var [ Expression ] */
+    public $expressions;
 }

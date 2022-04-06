@@ -7,10 +7,15 @@
  * LICENSE.md file that was distributed with this source code.
  */
 
-namespace allejo\Rosetta\Console;
+namespace allejo\Rosetta\Babel;
 
-use Symfony\Component\Console\Application as BaseApplication;
-
-class Application extends BaseApplication
+class SwitchCase extends Node
 {
+    public $type = 'SwitchCase';
+
+    /** @var null|Expression */
+    public $test;
+
+    /** @var [ Statement ] */
+    public $consequent;
 }

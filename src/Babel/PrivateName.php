@@ -7,10 +7,12 @@
  * LICENSE.md file that was distributed with this source code.
  */
 
-namespace allejo\Rosetta\Console;
+namespace allejo\Rosetta\Babel;
 
-use Symfony\Component\Console\Application as BaseApplication;
-
-class Application extends BaseApplication
+class PrivateName extends Node
 {
+    public $type = 'PrivateName';
+
+    /** @var Identifier */
+    public $id;
 }

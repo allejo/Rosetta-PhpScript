@@ -7,10 +7,15 @@
  * LICENSE.md file that was distributed with this source code.
  */
 
-namespace allejo\Rosetta\Console;
+namespace allejo\Rosetta\Babel;
 
-use Symfony\Component\Console\Application as BaseApplication;
-
-class Application extends BaseApplication
+class TaggedTemplateExpression extends Expression
 {
+    public $type = 'TaggedTemplateExpression';
+
+    /** @var Expression */
+    public $tag;
+
+    /** @var TemplateLiteral */
+    public $quasi;
 }

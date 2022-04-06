@@ -7,10 +7,12 @@
  * LICENSE.md file that was distributed with this source code.
  */
 
-namespace allejo\Rosetta\Console;
+namespace allejo\Rosetta\Babel;
 
-use Symfony\Component\Console\Application as BaseApplication;
-
-class Application extends BaseApplication
+class RecordExpression extends Expression
 {
+    public $type = 'RecordExpression';
+
+    /** @var [ ObjectProperty | ObjectMethod | SpreadElement ] */
+    public $properties;
 }
