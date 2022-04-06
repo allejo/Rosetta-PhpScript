@@ -1,0 +1,14 @@
+{
+    "type": "module",
+    "dependencies": {
+        "@babel/parser": "^7.17.8",
+        "mkdirp": "^1.0.4",
+        "yargs": "^17.4.0"
+    },
+    "devDependencies": {
+        "prettier": "^2.6.2"
+    },
+    "scripts": {
+        "fmt": "prettier --write rosetta.js"
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "name": "allejo/rosetta-php-script",
+    "description": "A library for translating JavaScript into PHP",
+    "type": "application",
+    "license": "MIT",
+    "require": {
+        "nikic/php-parser": "^4.13",
+        "symfony/console": "^5.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "kubawerlos/php-cs-fixer-custom-fixers": "^3.10",
+        "pepakriz/phpstan-exception-rules": "^0.12.0",
+        "phpstan/phpstan": "^1.5.4",
+        "phpunit/phpunit": "^7.5",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "allejo\\Rosetta\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "allejo\\Rosetta\\test\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vladimir \"allejo\" Jimenez",
+            "email": "me@allejo.io"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "coverage": "phpunit --coverage-clover coverage.clover",
+        "fix": "php-cs-fixer fix $(if [ ! -z $CI ]; then echo \"--format=checkstyle\"; fi)",
+        "stan": "phpstan analyse -c phpstan.neon.dist $(if [ ! -z $CI ]; then echo \"--error-format=checkstyle\"; fi)",
+        "test": "phpunit"
+    }
+}

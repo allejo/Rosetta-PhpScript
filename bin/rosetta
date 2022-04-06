@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use allejo\Rosetta\Console\Application;
+
+$application = new Application('rosetta', '@package_version@');
+
+try
+{
+    $application->run();
+}
+catch (Exception $e)
+{
+    echo sprintf('An uncaught exception occurred while running %s.', $application->getName());
+    echo sprintf('  %s', $e->getMessage());
+}
