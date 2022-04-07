@@ -11,11 +11,17 @@ namespace allejo\Rosetta\Transformer;
 
 use allejo\Rosetta\Babel\Program;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
+use allejo\Rosetta\Transformer\Constructs\StringLiteral;
+use allejo\Rosetta\Transformer\Constructs\VariableDeclaration;
+use allejo\Rosetta\Transformer\Constructs\VariableDeclarator;
 
 class Transformer
 {
-    private static $transformers = [
+    private static array $transformers = [
         'FunctionDeclaration' => FunctionDeclaration::class,
+        'StringLiteral' => StringLiteral::class,
+        'VariableDeclaration' => VariableDeclaration::class,
+        'VariableDeclarator' => VariableDeclarator::class,
     ];
 
     public function fromJsonAST(string $json): array
@@ -33,15 +39,33 @@ class Transformer
 
         foreach ($program->body as $element)
         {
-            if (!array_key_exists($element->type, self::$transformers))
+            $transformed = self::babelAstToPhp($element);
+
+            if ($transformed === null)
             {
                 continue;
             }
 
-            $transformer = self::$transformers[$element->type];
-            $output[] = $transformer::fromBabel($element);
+            $output[] = $transformed;
         }
 
-        return $output;
+        $flattened = [];
+        array_walk_recursive($output, function ($a) use (&$flattened) {
+            $flattened[] = $a;
+        });
+
+        return $flattened;
+    }
+
+    public static function babelAstToPhp($babelAst)
+    {
+        if (!array_key_exists($babelAst->type, self::$transformers))
+        {
+            return null;
+        }
+
+        $transformer = self::$transformers[$babelAst->type];
+
+        return $transformer::fromBabel($babelAst);
     }
 }

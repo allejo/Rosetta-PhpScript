@@ -13,7 +13,7 @@ class VariableDeclarator extends Node
 {
     public $type = 'VariableDeclarator';
 
-    /** @var Pattern */
+    /** @var Identifier|Pattern */
     public $id;
 
     /** @var null|Expression */

@@ -20,13 +20,13 @@ use PhpParser\Node\Stmt\Function_ as PHPFunction;
 class FunctionDeclaration implements ConstructInterface
 {
     /**
-     * @param BabelFunctionDeclaration $babelFunction
+     * @param BabelFunctionDeclaration $babelConstruct
      */
-    public static function fromBabel($babelFunction): PHPFunction
+    public static function fromBabel($babelConstruct): PHPFunction
     {
-        $function = new PHPFunction($babelFunction->id->name);
+        $function = new PHPFunction($babelConstruct->id->name);
 
-        foreach ($babelFunction->params as $param)
+        foreach ($babelConstruct->params as $param)
         {
             if ($param->type !== 'Identifier')
             {
