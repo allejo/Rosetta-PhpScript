@@ -4,7 +4,7 @@
     "type": "application",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.4",
         "nikic/php-parser": "^4.13",
         "symfony/console": "^5.4"
     },
@@ -13,8 +13,9 @@
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.10",
         "pepakriz/phpstan-exception-rules": "^0.12.0",
         "phpstan/phpstan": "^1.5.4",
-        "phpunit/phpunit": "^7.5",
-        "roave/security-advisories": "dev-latest"
+        "phpunit/phpunit": "^9.5.20",
+        "roave/security-advisories": "dev-latest",
+        "symfony/finder": "^5.4"
     },
     "autoload": {
         "psr-4": {
@@ -39,6 +40,7 @@
     "scripts": {
         "coverage": "phpunit --coverage-clover coverage.clover",
         "fix": "php-cs-fixer fix $(if [ ! -z $CI ]; then echo \"--format=checkstyle\"; fi)",
+        "fixtures": "ls tests/fixtures/javascript/*.js | node src/JavaScript/rosetta.js --output ./tests/fixtures/babel/",
         "stan": "phpstan analyse -c phpstan.neon.dist $(if [ ! -z $CI ]; then echo \"--error-format=checkstyle\"; fi)",
         "test": "phpunit"
     }

@@ -1,5 +1,8 @@
+.phpunit.result.cache
 .php-cs-fixer.cache
-*-ast.txt
 
+.idea/
+.vscode/
 node_modules/
+src/JavaScript/ast/
 vendor/

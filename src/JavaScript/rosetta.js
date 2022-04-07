@@ -18,8 +18,8 @@ function parseAndWrite(filePath) {
 
     readFile(filePath, "utf8", (_, content) => {
         const ast = parse(content);
-        const filename = basename(filePath);
-        const output = `${outputDir}/${filename}-ast.txt`;
+        const filename = basename(filePath, '.js');
+        const output = `${outputDir}/${filename}.json`;
 
         writeFile(output, JSON.stringify(ast, null, "  "), (err) => {
             if (!err) {

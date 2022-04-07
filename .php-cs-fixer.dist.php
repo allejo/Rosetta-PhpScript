@@ -1,13 +1,22 @@
-<?php
+<?php declare(strict_types=1);
+
+/*
+ * (c) Vladimir "allejo" Jimenez <me@allejo.io>
+ *
+ * For the full copyright and license information, please view the
+ * LICENSE.md file that was distributed with this source code.
+ */
 
 $finder = PhpCsFixer\Finder::create()
+    ->append(['.php-cs-fixer.dist.php'])
     ->in('scripts')
     ->in('src')
+    ->notPath('JavaScript')
     ->in('tests')
-    ->exclude('src/JavaScript')
+    ->notPath('fixtures/php')
 ;
 
-$license = <<<HEADER
+$license = <<<'HEADER'
 (c) Vladimir "allejo" Jimenez <me@allejo.io>
 
 For the full copyright and license information, please view the
@@ -27,7 +36,7 @@ $config
             'position_after_control_structures' => 'next',
         ],
         'cast_spaces' => [
-            'space' => 'none'
+            'space' => 'none',
         ],
         'concat_space' => ['spacing' => 'one'],
         'declare_strict_types' => true,

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">tests</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Rosetta PhpScript">
+      <directory suffix="Test.php" phpVersion="7.4.0" phpVersionOperator="&gt;=">tests</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <ini name="display_errors" value="On"/>
+    <ini name="display_startup_errors" value="On"/>
+  </php>
+</phpunit>

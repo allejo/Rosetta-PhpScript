@@ -14,7 +14,7 @@ class Function_ extends Node
     /** @var null|Identifier */
     public $id;
 
-    /** @var [ Pattern ] */
+    /** @var Identifier[]|Pattern[] */
     public $params;
 
     /** @var BlockStatement */
