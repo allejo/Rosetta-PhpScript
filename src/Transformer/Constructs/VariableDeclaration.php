@@ -11,17 +11,17 @@ namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\VariableDeclaration as BabelVariableDeclaration;
 use allejo\Rosetta\Transformer\Transformer;
-use PhpParser\Node\Expr\Variable as PHPVariable;
+use PhpParser\Node\Expr\Variable;
 
 /**
- * @implements ConstructInterface<BabelVariableDeclaration, PHPVariable[]>
+ * @implements ConstructInterface<BabelVariableDeclaration, Variable[]>
  */
 class VariableDeclaration implements ConstructInterface
 {
     /**
      * @param BabelVariableDeclaration $babelConstruct
      *
-     * @return PHPVariable[]
+     * @return Variable[]
      */
     public static function fromBabel($babelConstruct): array
     {

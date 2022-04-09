@@ -16,6 +16,5 @@ class VariableDeclarator extends Node
     /** @var Identifier|Pattern */
     public $id;
 
-    /** @var null|Expression */
-    public $init;
+    public ?Expression $init;
 }

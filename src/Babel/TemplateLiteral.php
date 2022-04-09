@@ -13,9 +13,9 @@ class TemplateLiteral extends Expression
 {
     public $type = 'TemplateLiteral';
 
-    /** @var [ TemplateElement ] */
+    /** @var TemplateElement[] */
     public $quasis;
 
-    /** @var [ Expression ] */
+    /** @var Expression[] */
     public $expressions;
 }

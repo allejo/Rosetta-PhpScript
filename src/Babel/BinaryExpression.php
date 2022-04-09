@@ -13,7 +13,7 @@ class BinaryExpression extends Expression
 {
     public $type = 'BinaryExpression';
 
-    /** @var BinaryOperator */
+    /** @var string */
     public $operator;
 
     /** @var Expression|PrivateName */

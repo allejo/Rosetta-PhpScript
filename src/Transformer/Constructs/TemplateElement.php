@@ -9,19 +9,19 @@
 
 namespace allejo\Rosetta\Transformer\Constructs;
 
-use allejo\Rosetta\Babel\StringLiteral as BabelStringLiteral;
+use allejo\Rosetta\Babel\TemplateElement as BabelTemplateElement;
 use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelStringLiteral, String_>
+ * @implements ConstructInterface<BabelTemplateElement, String_>
  */
-class StringLiteral implements ConstructInterface
+class TemplateElement implements ConstructInterface
 {
     /**
-     * @param BabelStringLiteral $babelConstruct
+     * @param BabelTemplateElement $babelConstruct
      */
-    public static function fromBabel($babelConstruct): String_
+    public static function fromBabel($babelConstruct)
     {
-        return new String_($babelConstruct->value);
+        // TODO: Implement fromBabel() method.
     }
 }

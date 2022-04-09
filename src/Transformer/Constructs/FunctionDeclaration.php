@@ -12,19 +12,19 @@ namespace allejo\Rosetta\Transformer\Constructs;
 use allejo\Rosetta\Babel\FunctionDeclaration as BabelFunctionDeclaration;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
-use PhpParser\Node\Stmt\Function_ as PHPFunction;
+use PhpParser\Node\Stmt\Function_;
 
 /**
- * @implements ConstructInterface<BabelFunctionDeclaration, PHPFunction>
+ * @implements ConstructInterface<BabelFunctionDeclaration, Function_>
  */
 class FunctionDeclaration implements ConstructInterface
 {
     /**
      * @param BabelFunctionDeclaration $babelConstruct
      */
-    public static function fromBabel($babelConstruct): PHPFunction
+    public static function fromBabel($babelConstruct): Function_
     {
-        $function = new PHPFunction($babelConstruct->id->name);
+        $function = new Function_($babelConstruct->id->name);
 
         foreach ($babelConstruct->params as $param)
         {

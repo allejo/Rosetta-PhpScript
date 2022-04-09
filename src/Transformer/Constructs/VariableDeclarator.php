@@ -11,23 +11,24 @@ namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\VariableDeclarator as BabelVariableDeclarator;
 use allejo\Rosetta\Transformer\Transformer;
+use PhpParser\Comment\Doc;
 use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\ConstFetch;
-use PhpParser\Node\Expr\Variable as PHPVariable;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
-use PhpParser\Node\Stmt\Expression as PHPExpression;
+use PhpParser\Node\Stmt\Expression;
 
 /**
- * @implements ConstructInterface<BabelVariableDeclarator, PHPExpression>
+ * @implements ConstructInterface<BabelVariableDeclarator, Expression>
  */
 class VariableDeclarator implements ConstructInterface
 {
     /**
      * @param BabelVariableDeclarator $babelConstruct
      */
-    public static function fromBabel($babelConstruct): PHPExpression
+    public static function fromBabel($babelConstruct): Expression
     {
-        $variable = new PHPVariable($babelConstruct->id->name);
+        $variable = new Variable($babelConstruct->id->name);
         $value = null;
 
         if ($babelConstruct->init !== null)
@@ -35,11 +36,22 @@ class VariableDeclarator implements ConstructInterface
             $value = Transformer::babelAstToPhp($babelConstruct->init);
         }
 
+        $addWarning = false;
+
         if ($value === null)
         {
             $value = new ConstFetch(new Name('null'));
+            $addWarning = true;
         }
 
-        return new PHPExpression(new Assign($variable, $value));
+        $exp = new Expression(new Assign($variable, $value));
+
+        if ($addWarning)
+        {
+            $msg = sprintf('Rosetta-PhpScript :: Unsupported variable type, defaulting to null (%s)', $babelConstruct->init->type);
+            $exp->setDocComment(new Doc($msg));
+        }
+
+        return $exp;
     }
 }

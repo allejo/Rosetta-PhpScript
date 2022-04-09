@@ -10,20 +10,33 @@
 namespace allejo\Rosetta\Transformer;
 
 use allejo\Rosetta\Babel\Program;
+use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\StringLiteral;
+use allejo\Rosetta\Transformer\Constructs\TemplateElement;
+use allejo\Rosetta\Transformer\Constructs\TemplateLiteral;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclaration;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclarator;
+use allejo\Rosetta\Utilities\ArrayUtils;
+use PhpParser\Node;
 
 class Transformer
 {
     private static array $transformers = [
+        'BinaryExpression' => BinaryExpression::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
         'StringLiteral' => StringLiteral::class,
+        'TemplateElement' => TemplateElement::class,
+        'TemplateLiteral' => TemplateLiteral::class,
         'VariableDeclaration' => VariableDeclaration::class,
         'VariableDeclarator' => VariableDeclarator::class,
     ];
 
+    /**
+     * @throws \Exception
+     *
+     * @return Node[]
+     */
     public function fromJsonAST(string $json): array
     {
         $file = json_decode($json);
@@ -49,12 +62,7 @@ class Transformer
             $output[] = $transformed;
         }
 
-        $flattened = [];
-        array_walk_recursive($output, function ($a) use (&$flattened) {
-            $flattened[] = $a;
-        });
-
-        return $flattened;
+        return ArrayUtils::flatten($output);
     }
 
     public static function babelAstToPhp($babelAst)

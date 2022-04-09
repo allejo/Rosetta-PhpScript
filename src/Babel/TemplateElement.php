@@ -16,6 +16,6 @@ class TemplateElement extends Node
     /** @var bool */
     public $tail;
 
-    /** @var array{cooked: null|string, raw: string} */
+    /** @var object{cooked: null|string, raw: string} */
     public $value;
 }
