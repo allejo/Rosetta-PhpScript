@@ -15,6 +15,7 @@ use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
+use allejo\Rosetta\Transformer\Constructs\ObjectExpression;
 use allejo\Rosetta\Transformer\Constructs\StringLiteral;
 use allejo\Rosetta\Transformer\Constructs\TemplateElement;
 use allejo\Rosetta\Transformer\Constructs\TemplateLiteral;
@@ -30,6 +31,7 @@ class Transformer
         'BinaryExpression' => BinaryExpression::class,
         'BooleanLiteral' => BooleanLiteral::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
+        'ObjectExpression' => ObjectExpression::class,
         'NumericLiteral' => NumericLiteral::class,
         'StringLiteral' => StringLiteral::class,
         'TemplateElement' => TemplateElement::class,

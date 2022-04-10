@@ -13,6 +13,6 @@ class ObjectExpression extends Expression
 {
     public $type = 'ObjectExpression';
 
-    /** @var [ ObjectProperty | ObjectMethod | SpreadElement ] */
+    /** @var ObjectMethod[]|ObjectProperty[]|SpreadElement[] */
     public $properties;
 }

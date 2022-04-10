@@ -12,8 +12,8 @@ namespace allejo\Rosetta\Transformer\Constructs;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
 
 /**
- * @template B
- * @template P
+ * @template B extends \allejo\Rosetta\Babel\Node
+ * @template P extends \PhpParser\Node;
  */
 interface ConstructInterface
 {
