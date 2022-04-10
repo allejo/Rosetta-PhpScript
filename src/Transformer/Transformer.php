@@ -10,21 +10,27 @@
 namespace allejo\Rosetta\Transformer;
 
 use allejo\Rosetta\Babel\Program;
+use allejo\Rosetta\Exception\UnsupportedConstructException;
 use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
+use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
+use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
 use allejo\Rosetta\Transformer\Constructs\StringLiteral;
 use allejo\Rosetta\Transformer\Constructs\TemplateElement;
 use allejo\Rosetta\Transformer\Constructs\TemplateLiteral;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclaration;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclarator;
 use allejo\Rosetta\Utilities\ArrayUtils;
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 
 class Transformer
 {
     private static array $transformers = [
         'BinaryExpression' => BinaryExpression::class,
+        'BooleanLiteral' => BooleanLiteral::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
+        'NumericLiteral' => NumericLiteral::class,
         'StringLiteral' => StringLiteral::class,
         'TemplateElement' => TemplateElement::class,
         'TemplateLiteral' => TemplateLiteral::class,
@@ -74,6 +80,13 @@ class Transformer
 
         $transformer = self::$transformers[$babelAst->type];
 
-        return $transformer::fromBabel($babelAst);
+        try
+        {
+            return $transformer::fromBabel($babelAst);
+        }
+        catch (UnsupportedConstructException $e)
+        {
+            return new Doc(sprintf('Rosetta-PhpScript :: %s', $e->getMessage()));
+        }
     }
 }

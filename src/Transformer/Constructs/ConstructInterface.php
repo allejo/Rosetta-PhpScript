@@ -9,6 +9,8 @@
 
 namespace allejo\Rosetta\Transformer\Constructs;
 
+use allejo\Rosetta\Exception\UnsupportedConstructException;
+
 /**
  * @template B
  * @template P
@@ -17,6 +19,8 @@ interface ConstructInterface
 {
     /**
      * @param B $babelConstruct
+     *
+     * @throws UnsupportedConstructException
      *
      * @return P
      */
