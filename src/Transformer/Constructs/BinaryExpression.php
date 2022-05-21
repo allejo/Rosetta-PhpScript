@@ -11,17 +11,20 @@ namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\BinaryExpression as BabelBinaryExpression;
 use allejo\Rosetta\Transformer\Transformer;
+use PhpParser\Node\Expr\BinaryOp;
 use PhpParser\Node\Expr\BinaryOp\Concat;
+use PhpParser\Node\Expr\BinaryOp\Plus;
+use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelBinaryExpression, Concat>
+ * @implements ConstructInterface<BabelBinaryExpression, BinaryOp>
  */
 class BinaryExpression implements ConstructInterface
 {
     /**
      * @param BabelBinaryExpression $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Concat
+    public static function fromBabel($babelConstruct): BinaryOp
     {
         $leftConstruct = Transformer::babelAstToPhp($babelConstruct->left);
         $rightConstruct = Transformer::babelAstToPhp($babelConstruct->right);
@@ -29,7 +32,17 @@ class BinaryExpression implements ConstructInterface
 
         if ($babelConstruct->operator === '+')
         {
-            $result = new Concat($leftConstruct, $rightConstruct);
+            $areBothStrings = $leftConstruct instanceof String_ && $rightConstruct instanceof String_;
+            $oneIsConcat = $leftConstruct instanceof Concat || $rightConstruct instanceof Concat;
+
+            if ($areBothStrings || $oneIsConcat)
+            {
+                $result = new Concat($leftConstruct, $rightConstruct);
+            }
+            else
+            {
+                $result = new Plus($leftConstruct, $rightConstruct);
+            }
         }
 
         return $result;

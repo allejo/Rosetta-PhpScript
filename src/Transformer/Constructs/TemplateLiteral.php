@@ -10,6 +10,7 @@
 namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\TemplateLiteral as BabelTemplateLiteral;
+use allejo\Rosetta\Transformer\Transformer;
 use allejo\Rosetta\Utilities\ArrayUtils;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar\Encapsed;
@@ -42,7 +43,7 @@ class TemplateLiteral implements ConstructInterface
             if ($expression->type === 'Identifier')
             {
                 $position = $expression->loc->start;
-                $parts[$position->line][$position->column] = new Variable($expression->name);
+                $parts[$position->line][$position->column] = Transformer::babelAstToPhp($expression);
             }
         }
 

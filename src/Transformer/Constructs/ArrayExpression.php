@@ -13,7 +13,6 @@ use allejo\Rosetta\Babel\ArrayExpression as BabelArrayExpression;
 use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
-use PhpParser\Node\Scalar\LNumber;
 
 /**
  * @implements ConstructInterface<BabelArrayExpression, Array_>

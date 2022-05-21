@@ -13,12 +13,16 @@ use allejo\Rosetta\Babel\Node as BabelNode;
 use allejo\Rosetta\Babel\Program;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
 use allejo\Rosetta\Transformer\Constructs\ArrayExpression;
+use allejo\Rosetta\Transformer\Constructs\ArrowFunctionExpression;
 use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
+use allejo\Rosetta\Transformer\Constructs\BlockStatement;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
 use allejo\Rosetta\Transformer\Constructs\ConstructInterface;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
+use allejo\Rosetta\Transformer\Constructs\Identifier;
 use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
 use allejo\Rosetta\Transformer\Constructs\ObjectExpression;
+use allejo\Rosetta\Transformer\Constructs\ReturnStatement;
 use allejo\Rosetta\Transformer\Constructs\StringLiteral;
 use allejo\Rosetta\Transformer\Constructs\TemplateElement;
 use allejo\Rosetta\Transformer\Constructs\TemplateLiteral;
@@ -34,11 +38,15 @@ class Transformer
     /** @var array<string, class-string<ConstructInterface>> */
     private static array $transformers = [
         'ArrayExpression' => ArrayExpression::class,
+        'ArrowFunctionExpression' => ArrowFunctionExpression::class,
         'BinaryExpression' => BinaryExpression::class,
+        'BlockStatement' => BlockStatement::class,
         'BooleanLiteral' => BooleanLiteral::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
+        'Identifier' => Identifier::class,
         'ObjectExpression' => ObjectExpression::class,
         'NumericLiteral' => NumericLiteral::class,
+        'ReturnStatement' => ReturnStatement::class,
         'StringLiteral' => StringLiteral::class,
         'TemplateElement' => TemplateElement::class,
         'TemplateLiteral' => TemplateLiteral::class,
