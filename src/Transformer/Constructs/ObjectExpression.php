@@ -45,6 +45,6 @@ class ObjectExpression implements ConstructInterface
             $items[] = new ArrayItem($value, $key);
         }
 
-        return new Object_(new Array_($items));
+        return new Object_(new Array_($items, ['kind' => Array_::KIND_LONG]));
     }
 }

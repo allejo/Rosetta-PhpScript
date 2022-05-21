@@ -9,10 +9,13 @@
 
 namespace allejo\Rosetta\Transformer;
 
+use allejo\Rosetta\Babel\Node as BabelNode;
 use allejo\Rosetta\Babel\Program;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
+use allejo\Rosetta\Transformer\Constructs\ArrayExpression;
 use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
+use allejo\Rosetta\Transformer\Constructs\ConstructInterface;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
 use allejo\Rosetta\Transformer\Constructs\ObjectExpression;
@@ -23,11 +26,14 @@ use allejo\Rosetta\Transformer\Constructs\VariableDeclaration;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclarator;
 use allejo\Rosetta\Utilities\ArrayUtils;
 use PhpParser\Comment\Doc;
-use PhpParser\Node;
+use PhpParser\Node as PHPNode;
+use PhpParser\Node\Expr as PHPExpression;
 
 class Transformer
 {
+    /** @var array<string, class-string<ConstructInterface>> */
     private static array $transformers = [
+        'ArrayExpression' => ArrayExpression::class,
         'BinaryExpression' => BinaryExpression::class,
         'BooleanLiteral' => BooleanLiteral::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
@@ -43,7 +49,7 @@ class Transformer
     /**
      * @throws \Exception
      *
-     * @return Node[]
+     * @return PHPNode[]
      */
     public function fromJsonAST(string $json): array
     {
@@ -73,9 +79,14 @@ class Transformer
         return ArrayUtils::flatten($output);
     }
 
+    /**
+     * @param null|BabelNode $babelAst
+     *
+     * @return null|Doc|PHPExpression
+     */
     public static function babelAstToPhp($babelAst)
     {
-        if (!array_key_exists($babelAst->type, self::$transformers))
+        if ($babelAst === null || !array_key_exists($babelAst->type, self::$transformers))
         {
             return null;
         }

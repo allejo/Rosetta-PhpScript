@@ -13,6 +13,6 @@ class ArrayExpression extends Expression
 {
     public $type = 'ArrayExpression';
 
-    /** @var [ Expression | SpreadElement | null ] */
+    /** @var array<null|Expression|SpreadElement> */
     public $elements;
 }
