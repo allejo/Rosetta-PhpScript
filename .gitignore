@@ -1,8 +1,10 @@
 .phpunit.result.cache
 .php-cs-fixer.cache
+.rosetta
 
 .idea/
 .vscode/
 node_modules/
+output/
 src/JavaScript/ast/
 vendor/

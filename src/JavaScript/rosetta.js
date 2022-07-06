@@ -22,11 +22,12 @@ function parseAndWrite(filePath) {
         const output = `${outputDir}/${filename}.json`;
 
         writeFile(output, JSON.stringify(ast, null, "  "), (err) => {
-            if (!err) {
+            if (err) {
+                console.error(`Failed to write "${output}": ${err}`);
                 return;
             }
 
-            console.error(`Failed to write "${output}": ${err}`);
+            console.log(`Wrote Babel AST for: ${filename}`);
         });
     });
 }

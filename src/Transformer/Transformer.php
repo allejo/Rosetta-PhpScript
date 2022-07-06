@@ -33,6 +33,7 @@ use allejo\Rosetta\Utilities\ArrayUtils;
 use PhpParser\Comment\Doc;
 use PhpParser\Node as PHPNode;
 use PhpParser\Node\Expr as PHPExpression;
+use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 class Transformer
@@ -122,6 +123,14 @@ class Transformer
         }
 
         return ArrayUtils::flatten($output);
+    }
+
+    /**
+     * @param PHPNode[] $phpAst
+     */
+    public function writeAsPHP(array $phpAst): string
+    {
+        return (new PrettyPrinter())->prettyPrintFile($phpAst);
     }
 
     /**

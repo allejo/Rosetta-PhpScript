@@ -7,16 +7,18 @@
         "php": ">=7.4",
         "nikic/php-parser": "^4.13",
         "symfony/console": "^5.4",
-        "symfony/event-dispatcher": "^5.4"
+        "symfony/event-dispatcher": "^5.4",
+        "symfony/finder": "^5.4",
+        "symfony/process": "^5.4"
     },
     "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.5",
         "friendsofphp/php-cs-fixer": "^3.3",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.10",
         "pepakriz/phpstan-exception-rules": "^0.12.0",
         "phpstan/phpstan": "^1.5.4",
         "phpunit/phpunit": "^9.5.20",
-        "roave/security-advisories": "dev-latest",
-        "symfony/finder": "^5.4"
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
@@ -36,12 +38,22 @@
     ],
     "minimum-stability": "stable",
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     },
     "scripts": {
+        "bin": "echo 'bin not installed'",
+        "post-install-cmd": ["@composer bin all install --ansi"],
+        "post-update-cmd": ["@composer bin all update --ansi"],
+        "build": [
+            "npm --prefix src/JavaScript --omit=dev install",
+            "box compile"
+        ],
         "coverage": "phpunit --coverage-clover coverage.clover",
         "fix": "php-cs-fixer fix $(if [ ! -z $CI ]; then echo \"--format=checkstyle\"; fi)",
-        "fixtures": "ls tests/fixtures/javascript/*.js | node src/JavaScript/rosetta.js --output ./tests/fixtures/babel/",
+        "fixtures": "ls -1 tests/fixtures/javascript/*.js | node src/JavaScript/rosetta.js --output ./tests/fixtures/babel/",
         "stan": "phpstan analyse -c phpstan.neon.dist $(if [ ! -z $CI ]; then echo \"--error-format=checkstyle\"; fi)",
         "test": "phpunit"
     }

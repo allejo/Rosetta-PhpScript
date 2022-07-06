@@ -9,8 +9,16 @@
 
 namespace allejo\Rosetta\Console;
 
+use allejo\Rosetta\Console\Command\TranslateCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 
 class Application extends BaseApplication
 {
+    protected function getDefaultCommands(): array
+    {
+        $commands = parent::getDefaultCommands();
+        $commands[] = new TranslateCommand();
+
+        return $commands;
+    }
 }
