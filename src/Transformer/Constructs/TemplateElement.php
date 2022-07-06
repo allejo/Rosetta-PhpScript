@@ -10,18 +10,24 @@
 namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\TemplateElement as BabelTemplateElement;
+use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelTemplateElement, String_>
+ * @implements PhpConstructInterface<BabelTemplateElement, String_>
  */
-class TemplateElement implements ConstructInterface
+class TemplateElement implements PhpConstructInterface
 {
     /**
      * @param BabelTemplateElement $babelConstruct
      */
-    public static function fromBabel($babelConstruct)
+    public static function fromBabel($babelConstruct, Transformer $transformer)
     {
         // TODO: Implement fromBabel() method.
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'TemplateElement';
     }
 }

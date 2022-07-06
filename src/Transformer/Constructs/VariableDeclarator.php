@@ -19,21 +19,21 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Expression;
 
 /**
- * @implements ConstructInterface<BabelVariableDeclarator, Expression>
+ * @implements PhpConstructInterface<BabelVariableDeclarator, Expression>
  */
-class VariableDeclarator implements ConstructInterface
+class VariableDeclarator implements PhpConstructInterface
 {
     /**
      * @param BabelVariableDeclarator $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Expression
+    public static function fromBabel($babelConstruct, Transformer $transformer): Expression
     {
         $variable = new Variable($babelConstruct->id->name);
         $value = null;
 
         if ($babelConstruct->init !== null)
         {
-            $value = Transformer::babelAstToPhp($babelConstruct->init);
+            $value = $transformer->babelAstToPhp($babelConstruct->init);
         }
 
         $addWarning = false;
@@ -53,5 +53,10 @@ class VariableDeclarator implements ConstructInterface
         }
 
         return $exp;
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'VariableDeclarator';
     }
 }

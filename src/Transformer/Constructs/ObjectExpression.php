@@ -18,14 +18,14 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelObjectExpression, Object_>
+ * @implements PhpConstructInterface<BabelObjectExpression, Object_>
  */
-class ObjectExpression implements ConstructInterface
+class ObjectExpression implements PhpConstructInterface
 {
     /**
      * @param BabelObjectExpression $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Object_
+    public static function fromBabel($babelConstruct, Transformer $transformer): Object_
     {
         /** @var ArrayItem[] $items */
         $items = [];
@@ -40,11 +40,16 @@ class ObjectExpression implements ConstructInterface
             $key = $property->computed
                 ? new Variable($property->key->name)
                 : new String_($property->key->name);
-            $value = Transformer::babelAstToPhp($property->value);
+            $value = $transformer->babelAstToPhp($property->value);
 
             $items[] = new ArrayItem($value, $key);
         }
 
         return new Object_(new Array_($items, ['kind' => Array_::KIND_LONG]));
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'ObjectExpression';
     }
 }

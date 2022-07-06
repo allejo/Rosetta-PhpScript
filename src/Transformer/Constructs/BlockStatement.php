@@ -14,25 +14,30 @@ use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Stmt;
 
 /**
- * @implements ConstructInterface<BabelBlockStatementAlias, Stmt[]>
+ * @implements PhpConstructInterface<BabelBlockStatementAlias, Stmt[]>
  */
-class BlockStatement implements ConstructInterface
+class BlockStatement implements PhpConstructInterface
 {
     /**
      * @param BabelBlockStatementAlias $babelConstruct
      *
      * @return Stmt[]
      */
-    public static function fromBabel($babelConstruct): array
+    public static function fromBabel($babelConstruct, Transformer $transformer): array
     {
         /** @var Stmt[] $statements */
         $statements = [];
 
         foreach ($babelConstruct->body as $stmt)
         {
-            $statements[] = Transformer::babelAstToPhp($stmt);
+            $statements[] = $transformer->babelAstToPhp($stmt);
         }
 
         return $statements;
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'BlockStatement';
     }
 }

@@ -10,18 +10,24 @@
 namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\StringLiteral as BabelStringLiteral;
+use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelStringLiteral, String_>
+ * @implements PhpConstructInterface<BabelStringLiteral, String_>
  */
-class StringLiteral implements ConstructInterface
+class StringLiteral implements PhpConstructInterface
 {
     /**
      * @param BabelStringLiteral $babelConstruct
      */
-    public static function fromBabel($babelConstruct): String_
+    public static function fromBabel($babelConstruct, Transformer $transformer): String_
     {
         return new String_($babelConstruct->value);
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'StringLiteral';
     }
 }

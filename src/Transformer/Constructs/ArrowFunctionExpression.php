@@ -16,14 +16,14 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
 
 /**
- * @implements ConstructInterface<BabelArrowFunctionExpression, Closure>
+ * @implements PhpConstructInterface<BabelArrowFunctionExpression, Closure>
  */
-class ArrowFunctionExpression implements ConstructInterface
+class ArrowFunctionExpression implements PhpConstructInterface
 {
     /**
      * @param BabelArrowFunctionExpression $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Closure
+    public static function fromBabel($babelConstruct, Transformer $transformer): Closure
     {
         /** @var Param[] $params */
         $params = [];
@@ -35,7 +35,12 @@ class ArrowFunctionExpression implements ConstructInterface
 
         return new Closure([
             'params' => $params,
-            'stmts' => Transformer::babelAstToPhp($babelConstruct->body),
+            'stmts' => $transformer->babelAstToPhp($babelConstruct->body),
         ]);
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'ArrowFunctionExpression';
     }
 }

@@ -10,13 +10,16 @@
 namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Exception\UnsupportedConstructException;
+use allejo\Rosetta\Transformer\Transformer;
 
 /**
  * @template B extends \allejo\Rosetta\Babel\Node
  * @template P extends \PhpParser\Node;
  */
-interface ConstructInterface
+interface PhpConstructInterface
 {
+    public static function getConstructName(): string;
+
     /**
      * @param B $babelConstruct
      *
@@ -24,5 +27,5 @@ interface ConstructInterface
      *
      * @return P
      */
-    public static function fromBabel($babelConstruct);
+    public static function fromBabel($babelConstruct, Transformer $transformer);
 }

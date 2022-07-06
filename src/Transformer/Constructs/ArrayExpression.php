@@ -15,24 +15,29 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 
 /**
- * @implements ConstructInterface<BabelArrayExpression, Array_>
+ * @implements PhpConstructInterface<BabelArrayExpression, Array_>
  */
-class ArrayExpression implements ConstructInterface
+class ArrayExpression implements PhpConstructInterface
 {
     /**
      * @param BabelArrayExpression $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Array_
+    public static function fromBabel($babelConstruct, Transformer $transformer): Array_
     {
         /** @var ArrayItem[] $items */
         $items = [];
 
         foreach ($babelConstruct->elements as $element)
         {
-            $element = Transformer::babelAstToPhp($element);
+            $element = $transformer->babelAstToPhp($element);
             $items[] = new ArrayItem($element);
         }
 
         return new Array_($items, ['kind' => Array_::KIND_LONG]);
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'ArrayExpression';
     }
 }

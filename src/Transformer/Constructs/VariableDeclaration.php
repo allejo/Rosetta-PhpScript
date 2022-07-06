@@ -14,19 +14,24 @@ use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Expr\Variable;
 
 /**
- * @implements ConstructInterface<BabelVariableDeclaration, Variable[]>
+ * @implements PhpConstructInterface<BabelVariableDeclaration, Variable[]>
  */
-class VariableDeclaration implements ConstructInterface
+class VariableDeclaration implements PhpConstructInterface
 {
     /**
      * @param BabelVariableDeclaration $babelConstruct
      *
      * @return Variable[]
      */
-    public static function fromBabel($babelConstruct): array
+    public static function fromBabel($babelConstruct, Transformer $transformer): array
     {
-        return array_map(static function ($declaration) {
-            return Transformer::babelAstToPhp($declaration);
+        return array_map(static function ($declaration) use ($transformer) {
+            return $transformer->babelAstToPhp($declaration);
         }, $babelConstruct->declarations);
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'VariableDeclaration';
     }
 }

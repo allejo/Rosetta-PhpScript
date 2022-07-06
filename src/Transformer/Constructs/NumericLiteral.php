@@ -11,13 +11,14 @@ namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\NumericLiteral as BabelNumericLiteral;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
+use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
 
 /**
- * @implements ConstructInterface<BabelNumericLiteral, DNumber|LNumber>
+ * @implements PhpConstructInterface<BabelNumericLiteral, DNumber|LNumber>
  */
-class NumericLiteral implements ConstructInterface
+class NumericLiteral implements PhpConstructInterface
 {
     /**
      * @param BabelNumericLiteral $babelConstruct
@@ -26,7 +27,7 @@ class NumericLiteral implements ConstructInterface
      *
      * @return DNumber|LNumber
      */
-    public static function fromBabel($babelConstruct)
+    public static function fromBabel($babelConstruct, Transformer $transformer)
     {
         if (is_float($babelConstruct->value))
         {
@@ -39,5 +40,10 @@ class NumericLiteral implements ConstructInterface
         }
 
         throw new UnsupportedConstructException("Could not determine type of number for: {$babelConstruct->value}");
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'NumericLiteral';
     }
 }

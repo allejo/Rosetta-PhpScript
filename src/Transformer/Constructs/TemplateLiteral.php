@@ -18,16 +18,16 @@ use PhpParser\Node\Scalar\EncapsedStringPart;
 use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelTemplateLiteral, Encapsed|String_>
+ * @implements PhpConstructInterface<BabelTemplateLiteral, Encapsed|String_>
  */
-class TemplateLiteral implements ConstructInterface
+class TemplateLiteral implements PhpConstructInterface
 {
     /**
      * @param BabelTemplateLiteral $babelConstruct
      *
      * @return Encapsed|String_
      */
-    public static function fromBabel($babelConstruct)
+    public static function fromBabel($babelConstruct, Transformer $transformer)
     {
         /** @var array<int, array<int, Variable>> $parts */
         $parts = [];
@@ -43,7 +43,7 @@ class TemplateLiteral implements ConstructInterface
             if ($expression->type === 'Identifier')
             {
                 $position = $expression->loc->start;
-                $parts[$position->line][$position->column] = Transformer::babelAstToPhp($expression);
+                $parts[$position->line][$position->column] = $transformer->babelAstToPhp($expression);
             }
         }
 
@@ -69,5 +69,10 @@ class TemplateLiteral implements ConstructInterface
         }
 
         return new String_($concatenated);
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'TemplateLiteral';
     }
 }

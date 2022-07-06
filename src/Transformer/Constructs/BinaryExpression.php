@@ -17,17 +17,17 @@ use PhpParser\Node\Expr\BinaryOp\Plus;
 use PhpParser\Node\Scalar\String_;
 
 /**
- * @implements ConstructInterface<BabelBinaryExpression, BinaryOp>
+ * @implements PhpConstructInterface<BabelBinaryExpression, BinaryOp>
  */
-class BinaryExpression implements ConstructInterface
+class BinaryExpression implements PhpConstructInterface
 {
     /**
      * @param BabelBinaryExpression $babelConstruct
      */
-    public static function fromBabel($babelConstruct): BinaryOp
+    public static function fromBabel($babelConstruct, Transformer $transformer): BinaryOp
     {
-        $leftConstruct = Transformer::babelAstToPhp($babelConstruct->left);
-        $rightConstruct = Transformer::babelAstToPhp($babelConstruct->right);
+        $leftConstruct = $transformer->babelAstToPhp($babelConstruct->left);
+        $rightConstruct = $transformer->babelAstToPhp($babelConstruct->right);
         $result = null;
 
         if ($babelConstruct->operator === '+')
@@ -46,5 +46,10 @@ class BinaryExpression implements ConstructInterface
         }
 
         return $result;
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'BinaryExpression';
     }
 }

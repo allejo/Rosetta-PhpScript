@@ -10,19 +10,25 @@
 namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\BooleanLiteral as BabelBooleanLiteral;
+use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Name;
 
 /**
- * @implements ConstructInterface<BabelBooleanLiteral, ConstFetch>
+ * @implements PhpConstructInterface<BabelBooleanLiteral, ConstFetch>
  */
-class BooleanLiteral implements ConstructInterface
+class BooleanLiteral implements PhpConstructInterface
 {
     /**
      * @param BabelBooleanLiteral $babelConstruct
      */
-    public static function fromBabel($babelConstruct): ConstFetch
+    public static function fromBabel($babelConstruct, Transformer $transformer): ConstFetch
     {
         return new ConstFetch(new Name($babelConstruct->value ? 'true' : 'false'));
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'BooleanLiteral';
     }
 }

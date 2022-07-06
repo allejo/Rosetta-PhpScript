@@ -14,15 +14,20 @@ use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Stmt\Return_;
 
 /**
- * @implements ConstructInterface<BabelReturnStatement, Return_>
+ * @implements PhpConstructInterface<BabelReturnStatement, Return_>
  */
-class ReturnStatement implements ConstructInterface
+class ReturnStatement implements PhpConstructInterface
 {
     /**
      * @param BabelReturnStatement $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Return_
+    public static function fromBabel($babelConstruct, Transformer $transformer): Return_
     {
-        return new Return_(Transformer::babelAstToPhp($babelConstruct->argument));
+        return new Return_($transformer->babelAstToPhp($babelConstruct->argument));
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'ReturnStatement';
     }
 }

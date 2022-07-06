@@ -11,17 +11,18 @@ namespace allejo\Rosetta\Transformer;
 
 use allejo\Rosetta\Babel\Node as BabelNode;
 use allejo\Rosetta\Babel\Program;
+use allejo\Rosetta\Event\UnsupportedConstructEvent;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
 use allejo\Rosetta\Transformer\Constructs\ArrayExpression;
 use allejo\Rosetta\Transformer\Constructs\ArrowFunctionExpression;
 use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
 use allejo\Rosetta\Transformer\Constructs\BlockStatement;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
-use allejo\Rosetta\Transformer\Constructs\ConstructInterface;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\Identifier;
 use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
 use allejo\Rosetta\Transformer\Constructs\ObjectExpression;
+use allejo\Rosetta\Transformer\Constructs\PhpConstructInterface;
 use allejo\Rosetta\Transformer\Constructs\ReturnStatement;
 use allejo\Rosetta\Transformer\Constructs\StringLiteral;
 use allejo\Rosetta\Transformer\Constructs\TemplateElement;
@@ -32,11 +33,12 @@ use allejo\Rosetta\Utilities\ArrayUtils;
 use PhpParser\Comment\Doc;
 use PhpParser\Node as PHPNode;
 use PhpParser\Node\Expr as PHPExpression;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class Transformer
 {
-    /** @var array<string, class-string<ConstructInterface>> */
-    private static array $transformers = [
+    /** @var array<string, class-string<PhpConstructInterface>> */
+    private static array $builtinTransformers = [
         'ArrayExpression' => ArrayExpression::class,
         'ArrowFunctionExpression' => ArrowFunctionExpression::class,
         'BinaryExpression' => BinaryExpression::class,
@@ -53,6 +55,41 @@ class Transformer
         'VariableDeclaration' => VariableDeclaration::class,
         'VariableDeclarator' => VariableDeclarator::class,
     ];
+
+    private ?EventDispatcherInterface $eventDispatcher;
+
+    /** @var array<string, class-string<PhpConstructInterface>> */
+    private array $userTransformers = [];
+    private bool $updateTransformersList = true;
+
+    /**
+     * @param null|BabelNode $babelAst
+     *
+     * @return null|Doc|PHPExpression
+     */
+    public function babelAstToPhp($babelAst)
+    {
+        if ($babelAst === null || !array_key_exists($babelAst->type, self::$builtinTransformers))
+        {
+            return null;
+        }
+
+        $transformer = $this->getTransformers()[$babelAst->type];
+
+        try
+        {
+            return $transformer::fromBabel($babelAst, $this);
+        }
+        catch (UnsupportedConstructException $e)
+        {
+            $event = new UnsupportedConstructEvent($babelAst);
+
+            /** @var UnsupportedConstructEvent $construct */
+            $construct = $this->eventDispatcher->dispatch($event);
+
+            return $construct->getPhpConstruct() ?? new Doc(sprintf('Rosetta-PhpScript :: %s', $e->getMessage()));
+        }
+    }
 
     /**
      * @throws \Exception
@@ -74,7 +111,7 @@ class Transformer
 
         foreach ($program->body as $element)
         {
-            $transformed = self::babelAstToPhp($element);
+            $transformed = $this->babelAstToPhp($element);
 
             if ($transformed === null)
             {
@@ -88,26 +125,49 @@ class Transformer
     }
 
     /**
-     * @param null|BabelNode $babelAst
+     * @param class-string<PhpConstructInterface> $constructCls
+     * @param bool                                $force        force a user defined construct to take precedent over a built-in
      *
-     * @return null|Doc|PHPExpression
+     * @return bool true if successfully added transformer, false otherwise
      */
-    public static function babelAstToPhp($babelAst)
+    public function registerTransformer(string $constructCls, bool $force = false): bool
     {
-        if ($babelAst === null || !array_key_exists($babelAst->type, self::$transformers))
+        if ($force === false && isset(self::$builtinTransformers[$constructCls::getConstructName()]))
         {
-            return null;
+            return false;
         }
 
-        $transformer = self::$transformers[$babelAst->type];
+        $this->userTransformers[$constructCls::getConstructName()] = $constructCls;
+        $this->updateTransformersList = true;
 
-        try
+        return true;
+    }
+
+    public function getEventDispatcher(): ?EventDispatcherInterface
+    {
+        return $this->eventDispatcher;
+    }
+
+    public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher): self
+    {
+        $this->eventDispatcher = $eventDispatcher;
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, class-string<PhpConstructInterface>>
+     */
+    private function getTransformers(): array
+    {
+        static $allTransformers = [];
+
+        if ($this->updateTransformersList)
         {
-            return $transformer::fromBabel($babelAst);
+            $allTransformers = array_merge(self::$builtinTransformers, $this->userTransformers);
+            $this->updateTransformersList = false;
         }
-        catch (UnsupportedConstructException $e)
-        {
-            return new Doc(sprintf('Rosetta-PhpScript :: %s', $e->getMessage()));
-        }
+
+        return $allTransformers;
     }
 }

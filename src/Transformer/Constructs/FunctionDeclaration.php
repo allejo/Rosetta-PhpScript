@@ -10,19 +10,20 @@
 namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\FunctionDeclaration as BabelFunctionDeclaration;
+use allejo\Rosetta\Transformer\Transformer;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Function_;
 
 /**
- * @implements ConstructInterface<BabelFunctionDeclaration, Function_>
+ * @implements PhpConstructInterface<BabelFunctionDeclaration, Function_>
  */
-class FunctionDeclaration implements ConstructInterface
+class FunctionDeclaration implements PhpConstructInterface
 {
     /**
      * @param BabelFunctionDeclaration $babelConstruct
      */
-    public static function fromBabel($babelConstruct): Function_
+    public static function fromBabel($babelConstruct, Transformer $transformer): Function_
     {
         $function = new Function_($babelConstruct->id->name);
 
@@ -37,5 +38,10 @@ class FunctionDeclaration implements ConstructInterface
         }
 
         return $function;
+    }
+
+    public static function getConstructName(): string
+    {
+        return 'FunctionDeclaration';
     }
 }
