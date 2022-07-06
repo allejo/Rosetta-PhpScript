@@ -64,11 +64,14 @@ class Transformer
     private bool $updateTransformersList = true;
 
     /**
-     * @param null|BabelNode $babelAst
+     * Convert a Babel AST node to a PhpParser Node.
+     *
+     * @param null|BabelNode|\stdClass $babelAst an `stdClass` object representing a Babel AST node that is type hinted
+     *                                           to placeholder classes within the `allejo\Rosetta\Babel` namespace
      *
      * @return null|Doc|PHPExpression
      */
-    public function babelAstToPhp($babelAst)
+    public function fromBabelAstToPhpAst(?\stdClass $babelAst)
     {
         if ($babelAst === null || !array_key_exists($babelAst->type, self::$builtinTransformers))
         {
@@ -93,17 +96,20 @@ class Transformer
     }
 
     /**
-     * @throws \Exception
+     * Convert a JSON string of a Babel AST to a PhpParser AST.
+     *
+     * @throws \JsonException
+     * @throws UnsupportedConstructException
      *
      * @return PHPNode[]
      */
-    public function fromJsonAST(string $json): array
+    public function fromJsonStringToPhpAst(string $json): array
     {
-        $file = json_decode($json);
+        $file = json_decode($json, null, 512, JSON_THROW_ON_ERROR);
 
         if (!property_exists($file, 'program'))
         {
-            throw new \Exception('No `program` definition found in this AST.');
+            throw new UnsupportedConstructException('No `program` definition found in this AST.');
         }
 
         /** @var Program $program */
@@ -112,7 +118,7 @@ class Transformer
 
         foreach ($program->body as $element)
         {
-            $transformed = $this->babelAstToPhp($element);
+            $transformed = $this->fromBabelAstToPhpAst($element);
 
             if ($transformed === null)
             {
@@ -126,10 +132,19 @@ class Transformer
     }
 
     /**
-     * @param PHPNode[] $phpAst
+     * Convert a JSON string of a Babel AST to PHP source.
+     *
+     * @param string $json a JSON string containing the Babel AST
+     *
+     * @throws \JsonException
+     * @throws UnsupportedConstructException
+     *
+     * @return string PHP source code with the `<?php` tag
      */
-    public function writeAsPHP(array $phpAst): string
+    public function fromJsonStringToPhp(string $json): string
     {
+        $phpAst = $this->fromJsonStringToPhpAst($json);
+
         return (new PrettyPrinter())->prettyPrintFile($phpAst);
     }
 

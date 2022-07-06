@@ -29,7 +29,7 @@ class ArrayExpression implements PhpConstructInterface
 
         foreach ($babelConstruct->elements as $element)
         {
-            $element = $transformer->babelAstToPhp($element);
+            $element = $transformer->fromBabelAstToPhpAst($element);
             $items[] = new ArrayItem($element);
         }
 

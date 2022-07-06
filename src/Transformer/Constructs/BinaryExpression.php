@@ -26,8 +26,8 @@ class BinaryExpression implements PhpConstructInterface
      */
     public static function fromBabel($babelConstruct, Transformer $transformer): BinaryOp
     {
-        $leftConstruct = $transformer->babelAstToPhp($babelConstruct->left);
-        $rightConstruct = $transformer->babelAstToPhp($babelConstruct->right);
+        $leftConstruct = $transformer->fromBabelAstToPhpAst($babelConstruct->left);
+        $rightConstruct = $transformer->fromBabelAstToPhpAst($babelConstruct->right);
         $result = null;
 
         if ($babelConstruct->operator === '+')

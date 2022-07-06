@@ -53,7 +53,7 @@ class TransformerTest extends TestCase
     public function testTransformer(string $babelJsonFixture, string $expectedPhpFixture): void
     {
         $transformer = new Transformer();
-        $phpAST = $transformer->fromJsonAST($babelJsonFixture);
+        $phpAST = $transformer->fromJsonStringToPhpAst($babelJsonFixture);
 
         self::assertPhpAstEqualsSource($phpAST, $expectedPhpFixture);
     }

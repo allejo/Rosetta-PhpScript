@@ -23,7 +23,7 @@ class ReturnStatement implements PhpConstructInterface
      */
     public static function fromBabel($babelConstruct, Transformer $transformer): Return_
     {
-        return new Return_($transformer->babelAstToPhp($babelConstruct->argument));
+        return new Return_($transformer->fromBabelAstToPhpAst($babelConstruct->argument));
     }
 
     public static function getConstructName(): string

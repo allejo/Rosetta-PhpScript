@@ -43,7 +43,7 @@ class TemplateLiteral implements PhpConstructInterface
             if ($expression->type === 'Identifier')
             {
                 $position = $expression->loc->start;
-                $parts[$position->line][$position->column] = $transformer->babelAstToPhp($expression);
+                $parts[$position->line][$position->column] = $transformer->fromBabelAstToPhpAst($expression);
             }
         }
 

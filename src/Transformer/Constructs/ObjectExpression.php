@@ -40,7 +40,7 @@ class ObjectExpression implements PhpConstructInterface
             $key = $property->computed
                 ? new Variable($property->key->name)
                 : new String_($property->key->name);
-            $value = $transformer->babelAstToPhp($property->value);
+            $value = $transformer->fromBabelAstToPhpAst($property->value);
 
             $items[] = new ArrayItem($value, $key);
         }

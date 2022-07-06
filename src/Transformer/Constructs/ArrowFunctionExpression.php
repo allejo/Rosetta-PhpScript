@@ -35,7 +35,7 @@ class ArrowFunctionExpression implements PhpConstructInterface
 
         return new Closure([
             'params' => $params,
-            'stmts' => $transformer->babelAstToPhp($babelConstruct->body),
+            'stmts' => $transformer->fromBabelAstToPhpAst($babelConstruct->body),
         ]);
     }
 

@@ -119,7 +119,7 @@ class TranslateCommand extends Command
 
             try
             {
-                $phpAst = $transformer->fromJsonAST($astRaw);
+                $phpSrc = $transformer->fromJsonStringToPhp($astRaw);
             }
             catch (\Exception $e)
             {
@@ -128,7 +128,6 @@ class TranslateCommand extends Command
                 continue;
             }
 
-            $phpSrc = $transformer->writeAsPHP($phpAst);
             file_put_contents($outputDir . '/' . $filename, $phpSrc);
         }
 

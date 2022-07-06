@@ -26,7 +26,7 @@ class VariableDeclaration implements PhpConstructInterface
     public static function fromBabel($babelConstruct, Transformer $transformer): array
     {
         return array_map(static function ($declaration) use ($transformer) {
-            return $transformer->babelAstToPhp($declaration);
+            return $transformer->fromBabelAstToPhpAst($declaration);
         }, $babelConstruct->declarations);
     }
 

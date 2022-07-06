@@ -30,7 +30,7 @@ class BlockStatement implements PhpConstructInterface
 
         foreach ($babelConstruct->body as $stmt)
         {
-            $statements[] = $transformer->babelAstToPhp($stmt);
+            $statements[] = $transformer->fromBabelAstToPhpAst($stmt);
         }
 
         return $statements;

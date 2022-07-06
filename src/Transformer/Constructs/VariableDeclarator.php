@@ -33,7 +33,7 @@ class VariableDeclarator implements PhpConstructInterface
 
         if ($babelConstruct->init !== null)
         {
-            $value = $transformer->babelAstToPhp($babelConstruct->init);
+            $value = $transformer->fromBabelAstToPhpAst($babelConstruct->init);
         }
 
         $addWarning = false;
