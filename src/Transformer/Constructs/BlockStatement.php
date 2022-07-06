@@ -11,6 +11,7 @@ namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\BlockStatement as BabelBlockStatementAlias;
 use allejo\Rosetta\Transformer\Transformer;
+use allejo\Rosetta\Utilities\ArrayUtils;
 use PhpParser\Node\Stmt;
 
 /**
@@ -33,7 +34,7 @@ class BlockStatement implements PhpConstructInterface
             $statements[] = $transformer->fromBabelAstToPhpAst($stmt);
         }
 
-        return $statements;
+        return ArrayUtils::flatten($statements);
     }
 
     public static function getConstructName(): string

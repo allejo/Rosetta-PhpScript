@@ -9,7 +9,7 @@
 
 namespace allejo\Rosetta\Babel;
 
-class Node
+class Node extends \stdClass
 {
     /** @var string */
     public $type;

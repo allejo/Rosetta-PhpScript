@@ -13,9 +13,9 @@ class BlockStatement extends Statement
 {
     public $type = 'BlockStatement';
 
-    /** @var [ Statement ] */
+    /** @var Statement[] */
     public $body;
 
-    /** @var [ Directive ] */
+    /** @var Directive[] */
     public $directives;
 }

@@ -37,6 +37,8 @@ class FunctionDeclaration implements PhpConstructInterface
             $function->params[] = new Param(new Variable($param->name));
         }
 
+        $function->stmts = $transformer->fromBabelAstToPhpAst($babelConstruct->body);
+
         return $function;
     }
 
