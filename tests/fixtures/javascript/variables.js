@@ -7,6 +7,8 @@ const aNumber = 123456;
 const aDecimal = 123.45;
 const aFalseBool = false;
 const aTrueBool = true;
+const aNullable = null;
+const anUndefined = undefined;
 
 const anObject = { hello: 'world', [aSimpleString]: 'variable key' };
 const anArray = [1, 2, 3, 4, '5', '6', '7', true, false, { hello: 'world' }];

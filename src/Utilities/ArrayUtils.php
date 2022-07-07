@@ -9,6 +9,9 @@
 
 namespace allejo\Rosetta\Utilities;
 
+/**
+ * @internal
+ */
 abstract class ArrayUtils
 {
     /**

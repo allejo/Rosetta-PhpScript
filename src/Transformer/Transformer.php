@@ -20,6 +20,7 @@ use allejo\Rosetta\Transformer\Constructs\BlockStatement;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\Identifier;
+use allejo\Rosetta\Transformer\Constructs\NullLiteral;
 use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
 use allejo\Rosetta\Transformer\Constructs\ObjectExpression;
 use allejo\Rosetta\Transformer\Constructs\PhpConstructInterface;
@@ -30,6 +31,7 @@ use allejo\Rosetta\Transformer\Constructs\TemplateLiteral;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclaration;
 use allejo\Rosetta\Transformer\Constructs\VariableDeclarator;
 use allejo\Rosetta\Utilities\ArrayUtils;
+use allejo\Rosetta\Utilities\PhpAstHelpers;
 use PhpParser\Comment\Doc;
 use PhpParser\Node as PHPNode;
 use PhpParser\Node\Expr as PHPExpression;
@@ -48,6 +50,7 @@ class Transformer
         'FunctionDeclaration' => FunctionDeclaration::class,
         'Identifier' => Identifier::class,
         'ObjectExpression' => ObjectExpression::class,
+        'NullLiteral' => NullLiteral::class,
         'NumericLiteral' => NumericLiteral::class,
         'ReturnStatement' => ReturnStatement::class,
         'StringLiteral' => StringLiteral::class,
@@ -82,7 +85,7 @@ class Transformer
 
         if (!array_key_exists($babelAst->type, $transformers))
         {
-            return $this->tryEventDispatcher($babelAst, sprintf('Rosetta-PhpScript :: No support for %s', $babelAst->type));
+            return PhpAstHelpers::makeNullAst();
         }
 
         $transformer = $transformers[$babelAst->type];
