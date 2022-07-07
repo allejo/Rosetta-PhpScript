@@ -13,6 +13,7 @@ use allejo\Rosetta\Transformer\Transformer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
@@ -32,8 +33,10 @@ class TranslateCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('inputFileOrDir', InputArgument::REQUIRED, '')
-            ->addArgument('outputDir', InputArgument::OPTIONAL, '', 'output')
+            ->addArgument('inputFileOrDir', InputArgument::REQUIRED, 'A JavaScript file or a folder of JS files to translate to PHP')
+            ->addArgument('outputDir', InputArgument::OPTIONAL, 'The output directory where converted PHP files should be written to', 'output')
+            ->addOption('config', 'c', InputOption::VALUE_OPTIONAL, 'A configuration file that can return a custom Transformer', '.rosetta.dist.php')
+            ->addOption('exclude', 'e', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'File patterns to exclude', [])
         ;
     }
 
@@ -47,7 +50,7 @@ class TranslateCommand extends Command
         {
             $io->error("File or directory does not exist: {$inputFileOrDir}");
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $files = [];
@@ -58,10 +61,13 @@ class TranslateCommand extends Command
         }
         else
         {
+            $exclusions = $input->getOption('exclude');
+
             $finder = new Finder();
             $finder
                 ->ignoreDotFiles(true)
                 ->ignoreVCS(true)
+                ->notName($exclusions)
                 ->in($inputFileOrDir)
                 ->files()
             ;
@@ -77,7 +83,7 @@ class TranslateCommand extends Command
             realpath(self::PROJECT_ROOT),
             null,
             implode("\n", $files),
-            2 * 60, // 5 minutes (in seconds)
+            2 * 60, // 2 minutes (in seconds)
         );
 
         try
@@ -97,7 +103,7 @@ class TranslateCommand extends Command
         {
             $io->error($exception->getMessage());
 
-            return 2;
+            return Command::FAILURE;
         }
 
         @mkdir($outputDir, 0777, true);
@@ -110,7 +116,8 @@ class TranslateCommand extends Command
             ->name('*.json')
             ->files()
         ;
-        $transformer = new Transformer();
+
+        $transformer = $this->getTransformer($input->getOption('config'));
 
         foreach ($babelASTs as $babelAST)
         {
@@ -128,10 +135,11 @@ class TranslateCommand extends Command
                 continue;
             }
 
+            $io->write("Successful conversion for: {$filename}");
             file_put_contents($outputDir . '/' . $filename, $phpSrc);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getBabelDirectory(): string
@@ -141,5 +149,22 @@ class TranslateCommand extends Command
             self::CACHE_DIR,
             'babel',
         ]);
+    }
+
+    private function getTransformer(?string $configPath): Transformer
+    {
+        if ($configPath && file_exists($configPath))
+        {
+            $returnValue = (include $configPath);
+
+            if (!$returnValue instanceof Transformer)
+            {
+                throw new \InvalidArgumentException("The return value from the given configuration file ({$configPath}) is not a Transformer object.");
+            }
+
+            return $returnValue;
+        }
+
+        return new Transformer();
     }
 }
