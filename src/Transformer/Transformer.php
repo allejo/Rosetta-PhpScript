@@ -57,7 +57,7 @@ class Transformer
         'VariableDeclarator' => VariableDeclarator::class,
     ];
 
-    private ?EventDispatcherInterface $eventDispatcher;
+    private ?EventDispatcherInterface $eventDispatcher = null;
 
     /** @var array<string, class-string<PhpConstructInterface>> */
     private array $userTransformers = [];
@@ -73,12 +73,19 @@ class Transformer
      */
     public function fromBabelAstToPhpAst(?\stdClass $babelAst)
     {
-        if ($babelAst === null || !array_key_exists($babelAst->type, self::$builtinTransformers))
+        if ($babelAst === null)
         {
             return null;
         }
 
-        $transformer = $this->getTransformers()[$babelAst->type];
+        $transformers = $this->getTransformers();
+
+        if (!array_key_exists($babelAst->type, $transformers))
+        {
+            return $this->tryEventDispatcher($babelAst, sprintf('Rosetta-PhpScript :: No support for %s', $babelAst->type));
+        }
+
+        $transformer = $transformers[$babelAst->type];
 
         try
         {
