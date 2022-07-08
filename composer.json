@@ -53,7 +53,10 @@
         ],
         "coverage": "phpunit --coverage-clover coverage.clover",
         "fix": "php-cs-fixer fix $(if [ ! -z $CI ]; then echo \"--format=checkstyle\"; fi)",
-        "fixtures": "ls -1 tests/fixtures/javascript/*.js | node src/JavaScript/rosetta.js --output ./tests/fixtures/babel/",
+        "fixtures": [
+            "allejo\\Rosetta\\Composer\\PhpAstFixtures::writePhpAstFixtures",
+            "ls -1 tests/fixtures/javascript/*.js | node src/JavaScript/rosetta.js --output ./tests/fixtures/babel/"
+        ],
         "stan": "phpstan analyse -c phpstan.neon.dist $(if [ ! -z $CI ]; then echo \"--error-format=checkstyle\"; fi)",
         "test": "phpunit"
     }

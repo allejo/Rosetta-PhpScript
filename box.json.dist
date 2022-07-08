@@ -5,6 +5,7 @@
         "KevinGH\\Box\\Compactor\\Php"
     ],
     "blacklist": [
+        "src/Composer/",
         "src/JavaScript/ast/",
         "vendor-bin/"
     ],
