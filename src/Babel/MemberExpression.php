@@ -16,7 +16,7 @@ class MemberExpression extends Expression
     /** @var Expression|Super */
     public $object;
 
-    /** @var Expression|PrivateName */
+    /** @var Expression|Identifier|PrivateName */
     public $property;
 
     /** @var bool */

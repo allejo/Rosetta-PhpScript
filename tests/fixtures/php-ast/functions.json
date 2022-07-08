@@ -1,0 +1,342 @@
+[
+    {
+        "nodeType": "Stmt_Function",
+        "attributes": {
+            "startLine": 3,
+            "endLine": 5
+        },
+        "byRef": false,
+        "name": {
+            "nodeType": "Identifier",
+            "attributes": {
+                "startLine": 3,
+                "endLine": 3
+            },
+            "name": "noOpFunction"
+        },
+        "params": [],
+        "returnType": null,
+        "stmts": [],
+        "attrGroups": [],
+        "namespacedName": null
+    },
+    {
+        "nodeType": "Stmt_Function",
+        "attributes": {
+            "startLine": 7,
+            "endLine": 9
+        },
+        "byRef": false,
+        "name": {
+            "nodeType": "Identifier",
+            "attributes": {
+                "startLine": 7,
+                "endLine": 7
+            },
+            "name": "withArguments"
+        },
+        "params": [
+            {
+                "nodeType": "Param",
+                "attributes": {
+                    "startLine": 7,
+                    "endLine": 7
+                },
+                "type": null,
+                "byRef": false,
+                "variadic": false,
+                "var": {
+                    "nodeType": "Expr_Variable",
+                    "attributes": {
+                        "startLine": 7,
+                        "endLine": 7
+                    },
+                    "name": "arg1"
+                },
+                "default": null,
+                "flags": 0,
+                "attrGroups": []
+            },
+            {
+                "nodeType": "Param",
+                "attributes": {
+                    "startLine": 7,
+                    "endLine": 7
+                },
+                "type": null,
+                "byRef": false,
+                "variadic": false,
+                "var": {
+                    "nodeType": "Expr_Variable",
+                    "attributes": {
+                        "startLine": 7,
+                        "endLine": 7
+                    },
+                    "name": "arg2"
+                },
+                "default": null,
+                "flags": 0,
+                "attrGroups": []
+            }
+        ],
+        "returnType": null,
+        "stmts": [],
+        "attrGroups": [],
+        "namespacedName": null
+    },
+    {
+        "nodeType": "Stmt_Function",
+        "attributes": {
+            "startLine": 11,
+            "endLine": 16
+        },
+        "byRef": false,
+        "name": {
+            "nodeType": "Identifier",
+            "attributes": {
+                "startLine": 11,
+                "endLine": 11
+            },
+            "name": "withArgAndBody"
+        },
+        "params": [
+            {
+                "nodeType": "Param",
+                "attributes": {
+                    "startLine": 11,
+                    "endLine": 11
+                },
+                "type": null,
+                "byRef": false,
+                "variadic": false,
+                "var": {
+                    "nodeType": "Expr_Variable",
+                    "attributes": {
+                        "startLine": 11,
+                        "endLine": 11
+                    },
+                    "name": "arg1"
+                },
+                "default": null,
+                "flags": 0,
+                "attrGroups": []
+            }
+        ],
+        "returnType": null,
+        "stmts": [
+            {
+                "nodeType": "Stmt_Expression",
+                "attributes": {
+                    "startLine": 13,
+                    "endLine": 13
+                },
+                "expr": {
+                    "nodeType": "Expr_Assign",
+                    "attributes": {
+                        "startLine": 13,
+                        "endLine": 13
+                    },
+                    "var": {
+                        "nodeType": "Expr_Variable",
+                        "attributes": {
+                            "startLine": 13,
+                            "endLine": 13
+                        },
+                        "name": "t"
+                    },
+                    "expr": {
+                        "nodeType": "Scalar_LNumber",
+                        "attributes": {
+                            "startLine": 13,
+                            "endLine": 13,
+                            "kind": 10
+                        },
+                        "value": 1
+                    }
+                }
+            },
+            {
+                "nodeType": "Stmt_Return",
+                "attributes": {
+                    "startLine": 15,
+                    "endLine": 15
+                },
+                "expr": {
+                    "nodeType": "Expr_BinaryOp_Plus",
+                    "attributes": {
+                        "startLine": 15,
+                        "endLine": 15
+                    },
+                    "left": {
+                        "nodeType": "Expr_Variable",
+                        "attributes": {
+                            "startLine": 15,
+                            "endLine": 15
+                        },
+                        "name": "t"
+                    },
+                    "right": {
+                        "nodeType": "Expr_Variable",
+                        "attributes": {
+                            "startLine": 15,
+                            "endLine": 15
+                        },
+                        "name": "arg1"
+                    }
+                }
+            }
+        ],
+        "attrGroups": [],
+        "namespacedName": null
+    },
+    {
+        "nodeType": "Stmt_Function",
+        "attributes": {
+            "startLine": 18,
+            "endLine": 24
+        },
+        "byRef": false,
+        "name": {
+            "nodeType": "Identifier",
+            "attributes": {
+                "startLine": 18,
+                "endLine": 18
+            },
+            "name": "withObjectAsArg"
+        },
+        "params": [
+            {
+                "nodeType": "Param",
+                "attributes": {
+                    "startLine": 18,
+                    "endLine": 18
+                },
+                "type": null,
+                "byRef": false,
+                "variadic": false,
+                "var": {
+                    "nodeType": "Expr_Variable",
+                    "attributes": {
+                        "startLine": 18,
+                        "endLine": 18
+                    },
+                    "name": "obj"
+                },
+                "default": null,
+                "flags": 0,
+                "attrGroups": []
+            }
+        ],
+        "returnType": null,
+        "stmts": [
+            {
+                "nodeType": "Stmt_Expression",
+                "attributes": {
+                    "startLine": 20,
+                    "endLine": 20
+                },
+                "expr": {
+                    "nodeType": "Expr_Assign",
+                    "attributes": {
+                        "startLine": 20,
+                        "endLine": 20
+                    },
+                    "var": {
+                        "nodeType": "Expr_Variable",
+                        "attributes": {
+                            "startLine": 20,
+                            "endLine": 20
+                        },
+                        "name": "t"
+                    },
+                    "expr": {
+                        "nodeType": "Expr_PropertyFetch",
+                        "attributes": {
+                            "startLine": 20,
+                            "endLine": 20
+                        },
+                        "var": {
+                            "nodeType": "Expr_Variable",
+                            "attributes": {
+                                "startLine": 20,
+                                "endLine": 20
+                            },
+                            "name": "obj"
+                        },
+                        "name": {
+                            "nodeType": "Identifier",
+                            "attributes": {
+                                "startLine": 20,
+                                "endLine": 20
+                            },
+                            "name": "SOME_CONSTANT"
+                        }
+                    }
+                }
+            },
+            {
+                "nodeType": "Stmt_Expression",
+                "attributes": {
+                    "startLine": 21,
+                    "endLine": 21
+                },
+                "expr": {
+                    "nodeType": "Expr_Assign",
+                    "attributes": {
+                        "startLine": 21,
+                        "endLine": 21
+                    },
+                    "var": {
+                        "nodeType": "Expr_Variable",
+                        "attributes": {
+                            "startLine": 21,
+                            "endLine": 21
+                        },
+                        "name": "a"
+                    },
+                    "expr": {
+                        "nodeType": "Expr_MethodCall",
+                        "attributes": {
+                            "startLine": 21,
+                            "endLine": 21
+                        },
+                        "var": {
+                            "nodeType": "Expr_Variable",
+                            "attributes": {
+                                "startLine": 21,
+                                "endLine": 21
+                            },
+                            "name": "obj"
+                        },
+                        "name": {
+                            "nodeType": "Identifier",
+                            "attributes": {
+                                "startLine": 21,
+                                "endLine": 21
+                            },
+                            "name": "someFunction"
+                        },
+                        "args": []
+                    }
+                }
+            },
+            {
+                "nodeType": "Stmt_Return",
+                "attributes": {
+                    "startLine": 23,
+                    "endLine": 23
+                },
+                "expr": {
+                    "nodeType": "Expr_Variable",
+                    "attributes": {
+                        "startLine": 23,
+                        "endLine": 23
+                    },
+                    "name": "obj"
+                }
+            }
+        ],
+        "attrGroups": [],
+        "namespacedName": null
+    }
+]

@@ -14,3 +14,11 @@ function withArgAndBody($arg1)
 
     return $t + $arg1;
 }
+
+function withObjectAsArg($obj)
+{
+    $t = $obj->SOME_CONSTANT;
+    $a = $obj->someFunction();
+
+    return $obj;
+}

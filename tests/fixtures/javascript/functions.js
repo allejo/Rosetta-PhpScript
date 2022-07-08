@@ -7,3 +7,10 @@ function withArgAndBody(arg1) {
 
     return t + arg1;
 }
+
+function withObjectAsArg(obj) {
+    const t = obj.SOME_CONSTANT;
+    const a = obj.someFunction();
+
+    return obj;
+}

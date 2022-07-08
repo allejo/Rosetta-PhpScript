@@ -16,6 +16,6 @@ class CallExpression extends Expression
     /** @var Expression|Import|Super */
     public $callee;
 
-    /** @var [ Expression | SpreadElement ] */
+    /** @var Expression[]|SpreadElement[] */
     public $arguments;
 }

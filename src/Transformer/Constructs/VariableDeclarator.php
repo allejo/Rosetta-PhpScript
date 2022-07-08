@@ -11,11 +11,10 @@ namespace allejo\Rosetta\Transformer\Constructs;
 
 use allejo\Rosetta\Babel\VariableDeclarator as BabelVariableDeclarator;
 use allejo\Rosetta\Transformer\Transformer;
+use allejo\Rosetta\Utilities\PhpAstHelpers;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Expr\Assign;
-use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\Variable;
-use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Expression;
 
 /**
@@ -40,7 +39,7 @@ class VariableDeclarator implements PhpConstructInterface
 
         if ($value === null)
         {
-            $value = new ConstFetch(new Name('null'));
+            $value = PhpAstHelpers::makeNullAst();
             $addWarning = true;
         }
 

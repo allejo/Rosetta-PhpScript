@@ -18,8 +18,10 @@ use allejo\Rosetta\Transformer\Constructs\ArrowFunctionExpression;
 use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
 use allejo\Rosetta\Transformer\Constructs\BlockStatement;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
+use allejo\Rosetta\Transformer\Constructs\CallExpression;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\Identifier;
+use allejo\Rosetta\Transformer\Constructs\MemberExpression;
 use allejo\Rosetta\Transformer\Constructs\NullLiteral;
 use allejo\Rosetta\Transformer\Constructs\NumericLiteral;
 use allejo\Rosetta\Transformer\Constructs\ObjectExpression;
@@ -47,9 +49,11 @@ class Transformer
         'BinaryExpression' => BinaryExpression::class,
         'BlockStatement' => BlockStatement::class,
         'BooleanLiteral' => BooleanLiteral::class,
+        'CallExpression' => CallExpression::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
         'Identifier' => Identifier::class,
         'ObjectExpression' => ObjectExpression::class,
+        'MemberExpression' => MemberExpression::class,
         'NullLiteral' => NullLiteral::class,
         'NumericLiteral' => NumericLiteral::class,
         'ReturnStatement' => ReturnStatement::class,
