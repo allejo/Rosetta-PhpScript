@@ -9,6 +9,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->append(['.php-cs-fixer.dist.php'])
+    ->in('bin')
     ->in('scripts')
     ->in('src')
     ->notPath('JavaScript')
