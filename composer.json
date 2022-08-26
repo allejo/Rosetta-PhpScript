@@ -20,6 +20,7 @@
         "phpunit/phpunit": "^9.5.20",
         "roave/security-advisories": "dev-latest"
     },
+    "bin": ["bin/rosetta"],
     "autoload": {
         "psr-4": {
             "allejo\\Rosetta\\": "src/"
