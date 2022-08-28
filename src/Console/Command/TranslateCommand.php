@@ -78,9 +78,18 @@ class TranslateCommand extends Command
             }
         }
 
+        if (\Phar::running() !== '')
+        {
+            $cwd = \Phar::running();
+        }
+        else
+        {
+            $cwd = realpath(self::PROJECT_ROOT);
+        }
+
         $jsProcess = new Process(
-            ['node', 'src/JavaScript/rosetta.js', "--output=\"{$this->getBabelDirectory()}\""],
-            realpath(self::PROJECT_ROOT),
+            ['node', 'src/JavaScript/dist/rosetta.js', "--output=\"{$this->getBabelDirectory()}\""],
+            $cwd,
             null,
             implode("\n", $files),
             2 * 60, // 2 minutes (in seconds)
@@ -130,12 +139,12 @@ class TranslateCommand extends Command
             }
             catch (\Exception $e)
             {
-                $io->error("Error writing file ({$filename}): {$e->getMessage()}");
+                $io->error("Error writing file ({$filename}): {$e->getMessage()}\n");
 
                 continue;
             }
 
-            $io->write("Successful conversion for: {$filename}");
+            $io->write("Successful conversion for: {$filename}\n");
             file_put_contents($outputDir . '/' . $filename, $phpSrc);
         }
 
@@ -145,7 +154,7 @@ class TranslateCommand extends Command
     private function getBabelDirectory(): string
     {
         return implode(DIRECTORY_SEPARATOR, [
-            realpath(self::PROJECT_ROOT),
+            getcwd(),
             self::CACHE_DIR,
             'babel',
         ]);

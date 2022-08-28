@@ -4,10 +4,12 @@
     "compactors": [
         "KevinGH\\Box\\Compactor\\Php"
     ],
+    "files": [
+        "src/JavaScript/dist/rosetta.js"
+    ],
     "blacklist": [
-        "src/Composer/",
-        "src/JavaScript/ast/",
-        "vendor-bin/"
+        "Composer/",
+        "JavaScript/"
     ],
     "datetime": "release-date",
     "git-version": "package_version",
