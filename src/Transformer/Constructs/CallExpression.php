@@ -12,11 +12,14 @@ namespace allejo\Rosetta\Transformer\Constructs;
 use allejo\Rosetta\Babel\CallExpression as BabelCallExpression;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
 use allejo\Rosetta\Transformer\Transformer;
+use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Name;
 
 /**
- * @implements PhpConstructInterface<BabelCallExpression, MethodCall>
+ * @implements PhpConstructInterface<BabelCallExpression, FuncCall|MethodCall>
  */
 class CallExpression implements PhpConstructInterface
 {
@@ -30,16 +33,27 @@ class CallExpression implements PhpConstructInterface
      *
      * @throws UnsupportedConstructException
      */
-    public static function fromBabel($babelConstruct, Transformer $transformer): MethodCall
+    public static function fromBabel($babelConstruct, Transformer $transformer): FuncCall|MethodCall
     {
         if ($babelConstruct->type !== 'CallExpression')
         {
             throw new UnsupportedConstructException("No support for handling a callee of type {$babelConstruct->type}");
         }
 
-        /** @var PropertyFetch $callee */
+        /** @var PropertyFetch|Variable $callee */
         $callee = $transformer->fromBabelAstToPhpAst($babelConstruct->callee);
+        $args = array_map(static fn ($arg) => $transformer->fromBabelAstToPhpAst($arg), $babelConstruct->arguments);
 
-        return new MethodCall($callee->var, $callee->name);
+        if ($callee instanceof PropertyFetch)
+        {
+            return new MethodCall($callee->var, $callee->name, $args);
+        }
+
+        if ($callee instanceof Variable)
+        {
+            return new FuncCall(new Name($callee->name), $args);
+        }
+
+        throw new UnsupportedConstructException(sprintf('No support for transforming a CallExpression from a %s', $callee::class));
     }
 }

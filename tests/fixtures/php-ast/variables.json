@@ -452,7 +452,7 @@
                     "attributes": {
                         "startLine": 15,
                         "endLine": 15,
-                        "kind": 1
+                        "kind": 2
                     },
                     "items": [
                         {
@@ -538,7 +538,7 @@
                 "attributes": {
                     "startLine": 16,
                     "endLine": 16,
-                    "kind": 1
+                    "kind": 2
                 },
                 "items": [
                     {
@@ -746,7 +746,7 @@
                                 "attributes": {
                                     "startLine": 16,
                                     "endLine": 16,
-                                    "kind": 1
+                                    "kind": 2
                                 },
                                 "items": [
                                     {

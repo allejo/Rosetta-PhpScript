@@ -12,5 +12,10 @@ function withObjectAsArg(obj) {
     const t = obj.SOME_CONSTANT;
     const a = obj.someFunction();
 
+    a.hello = 'world';
+    a.render('arg1', 'arg2');
+
     return obj;
 }
+
+withObjectAsArg({});

@@ -193,7 +193,7 @@
         "nodeType": "Stmt_Function",
         "attributes": {
             "startLine": 18,
-            "endLine": 24
+            "endLine": 27
         },
         "byRef": false,
         "name": {
@@ -321,16 +321,132 @@
                 }
             },
             {
-                "nodeType": "Stmt_Return",
+                "nodeType": "Stmt_Expression",
                 "attributes": {
                     "startLine": 23,
                     "endLine": 23
                 },
                 "expr": {
-                    "nodeType": "Expr_Variable",
+                    "nodeType": "Expr_Assign",
                     "attributes": {
                         "startLine": 23,
                         "endLine": 23
+                    },
+                    "var": {
+                        "nodeType": "Expr_PropertyFetch",
+                        "attributes": {
+                            "startLine": 23,
+                            "endLine": 23
+                        },
+                        "var": {
+                            "nodeType": "Expr_Variable",
+                            "attributes": {
+                                "startLine": 23,
+                                "endLine": 23
+                            },
+                            "name": "a"
+                        },
+                        "name": {
+                            "nodeType": "Identifier",
+                            "attributes": {
+                                "startLine": 23,
+                                "endLine": 23
+                            },
+                            "name": "hello"
+                        }
+                    },
+                    "expr": {
+                        "nodeType": "Scalar_String",
+                        "attributes": {
+                            "startLine": 23,
+                            "endLine": 23,
+                            "kind": 1
+                        },
+                        "value": "world"
+                    }
+                }
+            },
+            {
+                "nodeType": "Stmt_Expression",
+                "attributes": {
+                    "startLine": 24,
+                    "endLine": 24
+                },
+                "expr": {
+                    "nodeType": "Expr_MethodCall",
+                    "attributes": {
+                        "startLine": 24,
+                        "endLine": 24
+                    },
+                    "var": {
+                        "nodeType": "Expr_Variable",
+                        "attributes": {
+                            "startLine": 24,
+                            "endLine": 24
+                        },
+                        "name": "a"
+                    },
+                    "name": {
+                        "nodeType": "Identifier",
+                        "attributes": {
+                            "startLine": 24,
+                            "endLine": 24
+                        },
+                        "name": "render"
+                    },
+                    "args": [
+                        {
+                            "nodeType": "Arg",
+                            "attributes": {
+                                "startLine": 24,
+                                "endLine": 24
+                            },
+                            "name": null,
+                            "value": {
+                                "nodeType": "Scalar_String",
+                                "attributes": {
+                                    "startLine": 24,
+                                    "endLine": 24,
+                                    "kind": 1
+                                },
+                                "value": "arg1"
+                            },
+                            "byRef": false,
+                            "unpack": false
+                        },
+                        {
+                            "nodeType": "Arg",
+                            "attributes": {
+                                "startLine": 24,
+                                "endLine": 24
+                            },
+                            "name": null,
+                            "value": {
+                                "nodeType": "Scalar_String",
+                                "attributes": {
+                                    "startLine": 24,
+                                    "endLine": 24,
+                                    "kind": 1
+                                },
+                                "value": "arg2"
+                            },
+                            "byRef": false,
+                            "unpack": false
+                        }
+                    ]
+                }
+            },
+            {
+                "nodeType": "Stmt_Return",
+                "attributes": {
+                    "startLine": 26,
+                    "endLine": 26
+                },
+                "expr": {
+                    "nodeType": "Expr_Variable",
+                    "attributes": {
+                        "startLine": 26,
+                        "endLine": 26
                     },
                     "name": "obj"
                 }
@@ -338,5 +454,57 @@
         ],
         "attrGroups": [],
         "namespacedName": null
+    },
+    {
+        "nodeType": "Stmt_Expression",
+        "attributes": {
+            "startLine": 29,
+            "endLine": 29
+        },
+        "expr": {
+            "nodeType": "Expr_FuncCall",
+            "attributes": {
+                "startLine": 29,
+                "endLine": 29
+            },
+            "name": {
+                "nodeType": "Name",
+                "attributes": {
+                    "startLine": 29,
+                    "endLine": 29
+                },
+                "parts": [
+                    "withObjectAsArg"
+                ]
+            },
+            "args": [
+                {
+                    "nodeType": "Arg",
+                    "attributes": {
+                        "startLine": 29,
+                        "endLine": 29
+                    },
+                    "name": null,
+                    "value": {
+                        "nodeType": "Expr_Cast_Object",
+                        "attributes": {
+                            "startLine": 29,
+                            "endLine": 29
+                        },
+                        "expr": {
+                            "nodeType": "Expr_Array",
+                            "attributes": {
+                                "startLine": 29,
+                                "endLine": 29,
+                                "kind": 1
+                            },
+                            "items": []
+                        }
+                    },
+                    "byRef": false,
+                    "unpack": false
+                }
+            ]
+        }
     }
 ]

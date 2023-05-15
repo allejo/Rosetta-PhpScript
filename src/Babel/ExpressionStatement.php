@@ -13,6 +13,6 @@ class ExpressionStatement extends Statement
 {
     public $type = 'ExpressionStatement';
 
-    /** @var Expression */
+    /** @var AssignmentExpression */
     public $expression;
 }

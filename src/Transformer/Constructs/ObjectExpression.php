@@ -45,7 +45,7 @@ class ObjectExpression implements PhpConstructInterface
             $items[] = new ArrayItem($value, $key);
         }
 
-        return new Object_(new Array_($items, ['kind' => Array_::KIND_LONG]));
+        return new Object_(new Array_($items, ['kind' => Array_::KIND_SHORT]));
     }
 
     public static function getConstructName(): string

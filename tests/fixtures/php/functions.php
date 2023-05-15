@@ -20,5 +20,10 @@ function withObjectAsArg($obj)
     $t = $obj->SOME_CONSTANT;
     $a = $obj->someFunction();
 
+    $a->hello = 'world';
+    $a->render('arg1', 'arg2');
+
     return $obj;
 }
+
+withObjectAsArg((object)[]);

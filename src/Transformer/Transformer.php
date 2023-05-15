@@ -15,10 +15,12 @@ use allejo\Rosetta\Event\UnsupportedConstructEvent;
 use allejo\Rosetta\Exception\UnsupportedConstructException;
 use allejo\Rosetta\Transformer\Constructs\ArrayExpression;
 use allejo\Rosetta\Transformer\Constructs\ArrowFunctionExpression;
+use allejo\Rosetta\Transformer\Constructs\AssignmentExpression;
 use allejo\Rosetta\Transformer\Constructs\BinaryExpression;
 use allejo\Rosetta\Transformer\Constructs\BlockStatement;
 use allejo\Rosetta\Transformer\Constructs\BooleanLiteral;
 use allejo\Rosetta\Transformer\Constructs\CallExpression;
+use allejo\Rosetta\Transformer\Constructs\ExpressionStatement;
 use allejo\Rosetta\Transformer\Constructs\FunctionDeclaration;
 use allejo\Rosetta\Transformer\Constructs\Identifier;
 use allejo\Rosetta\Transformer\Constructs\MemberExpression;
@@ -46,10 +48,12 @@ class Transformer
     private static array $builtinTransformers = [
         'ArrayExpression' => ArrayExpression::class,
         'ArrowFunctionExpression' => ArrowFunctionExpression::class,
+        'AssignmentExpression' => AssignmentExpression::class,
         'BinaryExpression' => BinaryExpression::class,
         'BlockStatement' => BlockStatement::class,
         'BooleanLiteral' => BooleanLiteral::class,
         'CallExpression' => CallExpression::class,
+        'ExpressionStatement' => ExpressionStatement::class,
         'FunctionDeclaration' => FunctionDeclaration::class,
         'Identifier' => Identifier::class,
         'ObjectExpression' => ObjectExpression::class,
@@ -102,10 +106,10 @@ class Transformer
         {
             $event = new UnsupportedConstructEvent($babelAst);
 
-            /** @var UnsupportedConstructEvent $construct */
-            $construct = $this->eventDispatcher->dispatch($event);
+            /** @var null|UnsupportedConstructEvent $construct */
+            $construct = $this->eventDispatcher?->dispatch($event);
 
-            return $construct->getPhpConstruct() ?? new Doc(sprintf('Rosetta-PhpScript :: %s', $e->getMessage()));
+            return $construct?->getPhpConstruct() ?? new Doc(sprintf('Rosetta-PhpScript :: %s', $e->getMessage()));
         }
     }
 

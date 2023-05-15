@@ -12,8 +12,8 @@ $aTrueBool = true;
 $aNullable = null;
 $anUndefined = null;
 
-$anObject = (object) array('hello' => 'world', $aSimpleString => 'variable key');
-$anArray = array(1, 2, 3, 4, '5', '6', '7', true, false, (object) array('hello' => 'world'));
+$anObject = (object) ['hello' => 'world', $aSimpleString => 'variable key'];
+$anArray = [1, 2, 3, 4, '5', '6', '7', true, false, (object) ['hello' => 'world']];
 $aCallback = function ($arg1, $arg2) {
     return $arg1 + $arg2;
 };

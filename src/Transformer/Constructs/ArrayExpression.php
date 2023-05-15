@@ -33,7 +33,7 @@ class ArrayExpression implements PhpConstructInterface
             $items[] = new ArrayItem($element);
         }
 
-        return new Array_($items, ['kind' => Array_::KIND_LONG]);
+        return new Array_($items, ['kind' => Array_::KIND_SHORT]);
     }
 
     public static function getConstructName(): string
