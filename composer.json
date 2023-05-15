@@ -47,11 +47,16 @@
     "scripts": {
         "bin": "echo 'bin not installed'",
         "post-install-cmd": ["@composer bin all install --ansi"],
+        "post-package-install": ["@composer pre-build-node"],
+        "post-package-update": ["@composer pre-build-node"],
         "post-update-cmd": ["@composer bin all update --ansi"],
         "build": [
-            "npm --prefix src/JavaScript install",
-            "npm --prefix src/JavaScript run compile",
+            "@composer pre-build-node",
             "box compile"
+        ],
+        "pre-build-node": [
+            "npm --prefix src/JavaScript install",
+            "npm --prefix src/JavaScript run compile"
         ],
         "coverage": "phpunit --coverage-clover coverage.clover",
         "fix": "php-cs-fixer fix $(if [ ! -z $CI ]; then echo \"--format=checkstyle\"; fi)",
