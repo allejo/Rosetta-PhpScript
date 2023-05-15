@@ -46,10 +46,14 @@
     },
     "scripts": {
         "bin": "echo 'bin not installed'",
-        "post-install-cmd": ["@composer bin all install --ansi"],
-        "post-package-install": ["@composer pre-build-node"],
-        "post-package-update": ["@composer pre-build-node"],
-        "post-update-cmd": ["@composer bin all update --ansi"],
+        "post-install-cmd": [
+            "@composer bin all install --ansi",
+            "@composer pre-build-node"
+        ],
+        "post-update-cmd": [
+            "@composer bin all update --ansi",
+            "@composer pre-build-node"
+        ],
         "build": [
             "@composer pre-build-node",
             "box compile"
