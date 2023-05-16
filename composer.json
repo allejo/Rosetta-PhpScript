@@ -48,12 +48,10 @@
         "bin": "echo 'bin not installed'",
         "post-install-cmd": [
             "@composer bin all install --ansi",
-            "echo 'Building Node dependencies...'",
             "@composer pre-build-node"
         ],
         "post-update-cmd": [
             "@composer bin all update --ansi",
-            "echo 'Building Node dependencies...'",
             "@composer pre-build-node"
         ],
         "build": [

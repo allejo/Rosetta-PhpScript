@@ -1,0 +1,46 @@
+name: Release Artifact
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Setup Node LTS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Build JS dependencies
+        run: |
+          composer install
+          composer pre-build-node
+
+      - name: Build a Composer Archive
+        id: composer-archive
+        run: |
+          zipName="rosetta-phpscript-$(GITHUB_REF_NAME).zip"
+          composer archive --format=zip --file=$zipName
+
+          pharName="rosetta-$(GITHUB_REF_NAME).phar"
+          composer build
+          mv rosetta.phar "$pharName"
+
+          echo "PACKAGIST_NAME=$zipName" >> "$GITHUB_OUTPUT"
+          echo "PHAR_NAME=$pharName" >> "$GITHUB_OUTPUT"
+
+      - name: Upload a Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ steps.composer-archive.outputs.PACKAGIST_NAME }}
+            ${{ steps.composer-archive.outputs.PHAR_NAME }}
