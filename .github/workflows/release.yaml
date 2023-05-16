@@ -20,18 +20,22 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build a Composer Archives
-        id: composer-archive
-        run: |
-          echo "Installing Composer dependencies..."
-          composer install
+      - name: Install Dependencies
+        run: composer install
 
-          echo "Building PHAR..."
+      - name: Build a PHAR
+        id: composer-phar
+        run: |
           pharName="rosetta-$GITHUB_REF_NAME.phar"
           composer build
           mv rosetta.phar "$pharName"
+          echo "PHAR_NAME=$pharName" >> "$GITHUB_OUTPUT"
 
+      - name: Build a Composer Archives
+        id: composer-archive
+        run: |
           echo "Removing dev dependencies that don't belong in archives..."
+          rm -rf *.phar
           rm -rf src/JavaScript/node_modules/
           rm -rf tests/
           rm -rf vendor-bin/
@@ -40,12 +44,11 @@ jobs:
           zipName="rosetta-phpscript-$GITHUB_REF_NAME"
           composer archive --format=zip --file=$zipName
 
-          echo "PACKAGIST_NAME=$zipName.zip" >> "$GITHUB_OUTPUT"
-          echo "PHAR_NAME=$pharName" >> "$GITHUB_OUTPUT"
+          echo "ZIP_NAME=$zipName.zip" >> "$GITHUB_OUTPUT"
 
       - name: Upload a Release Asset
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ steps.composer-archive.outputs.PACKAGIST_NAME }}
-            ${{ steps.composer-archive.outputs.PHAR_NAME }}
+            ${{ steps.composer-archive.outputs.ZIP_NAME }}
+            ${{ steps.composer-phar.outputs.PHAR_NAME }}
