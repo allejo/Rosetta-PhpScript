@@ -28,10 +28,10 @@ jobs:
       - name: Build a Composer Archive
         id: composer-archive
         run: |
-          zipName="rosetta-phpscript-$(GITHUB_REF_NAME).zip"
+          zipName="rosetta-phpscript-$GITHUB_REF_NAME.zip"
           composer archive --format=zip --file=$zipName
 
-          pharName="rosetta-$(GITHUB_REF_NAME).phar"
+          pharName="rosetta-$GITHUB_REF_NAME.phar"
           composer build
           mv rosetta.phar "$pharName"
 
