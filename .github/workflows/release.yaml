@@ -26,14 +26,19 @@ jobs:
           echo "Installing Composer dependencies..."
           composer install
 
-          echo "Building Composer archive..."
-          zipName="rosetta-phpscript-$GITHUB_REF_NAME"
-          composer archive --format=zip --file=$zipName
-
           echo "Building PHAR..."
           pharName="rosetta-$GITHUB_REF_NAME.phar"
           composer build
           mv rosetta.phar "$pharName"
+
+          echo "Removing dev dependencies that don't belong in archives..."
+          rm -rf src/JavaScript/node_modules/
+          rm -rf tests/
+          rm -rf vendor-bin/
+
+          echo "Building Composer archive..."
+          zipName="rosetta-phpscript-$GITHUB_REF_NAME"
+          composer archive --format=zip --file=$zipName
 
           echo "PACKAGIST_NAME=$zipName.zip" >> "$GITHUB_OUTPUT"
           echo "PHAR_NAME=$pharName" >> "$GITHUB_OUTPUT"
