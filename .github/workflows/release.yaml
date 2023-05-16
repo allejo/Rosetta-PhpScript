@@ -34,12 +34,6 @@ jobs:
       - name: Build a Composer Archives
         id: composer-archive
         run: |
-          echo "Removing dev dependencies that don't belong in archives..."
-          rm -rf *.phar
-          rm -rf src/JavaScript/node_modules/
-          rm -rf tests/
-          rm -rf vendor-bin/
-
           echo "Building Composer archive..."
           zipName="rosetta-phpscript-$GITHUB_REF_NAME"
           composer archive --format=zip --file=$zipName

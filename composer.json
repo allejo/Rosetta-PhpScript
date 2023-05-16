@@ -9,6 +9,17 @@
         "url": "https://github.com/allejo/Rosetta-PhpScript/releases/download/v0.0.0/rosetta-phpscript-v0.0.0.zip",
         "reference": "v0.0.0"
     },
+    "archive": {
+        "exclude": [
+            "output/",
+            "src/JavaScript/",
+            "!src/JavaScript/dist/rosetta.js",
+            "tests/",
+            "vendor-bin/",
+            "*.phar",
+            "*.cache"
+        ]
+    },
     "require": {
         "php": ">=8.1",
         "nikic/php-parser": "^4.13",
