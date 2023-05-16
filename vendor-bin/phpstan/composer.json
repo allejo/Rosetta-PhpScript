@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpstan/phpstan": "^1.10",
+        "pepakriz/phpstan-exception-rules": "^0.12.0"
+    }
+}
