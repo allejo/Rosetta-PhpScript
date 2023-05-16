@@ -1,8 +1,9 @@
 .phpunit.result.cache
 .php-cs-fixer.cache
-.rosetta
+*.phar
 
 .idea/
+.rosetta/
 .vscode/
 output/
 src/JavaScript/ast/
