@@ -149,6 +149,7 @@
                         "attributes": {
                             "startLine": 13,
                             "endLine": 13,
+                            "rawValue": "1",
                             "kind": 10
                         },
                         "value": 1
@@ -360,7 +361,8 @@
                         "attributes": {
                             "startLine": 23,
                             "endLine": 23,
-                            "kind": 1
+                            "kind": 1,
+                            "rawValue": "'world'"
                         },
                         "value": "world"
                     }
@@ -407,7 +409,8 @@
                                 "attributes": {
                                     "startLine": 24,
                                     "endLine": 24,
-                                    "kind": 1
+                                    "kind": 1,
+                                    "rawValue": "'arg1'"
                                 },
                                 "value": "arg1"
                             },
@@ -426,7 +429,8 @@
                                 "attributes": {
                                     "startLine": 24,
                                     "endLine": 24,
-                                    "kind": 1
+                                    "kind": 1,
+                                    "rawValue": "'arg2'"
                                 },
                                 "value": "arg2"
                             },
@@ -496,7 +500,7 @@
                             "attributes": {
                                 "startLine": 29,
                                 "endLine": 29,
-                                "kind": 1
+                                "kind": 2
                             },
                             "items": []
                         }
