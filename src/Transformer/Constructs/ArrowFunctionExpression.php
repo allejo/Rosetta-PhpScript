@@ -28,8 +28,7 @@ class ArrowFunctionExpression implements PhpConstructInterface
         /** @var Param[] $params */
         $params = [];
 
-        foreach ($babelConstruct->params as $param)
-        {
+        foreach ($babelConstruct->params as $param) {
             $params[] = new Param(new Variable($param->name));
         }
 

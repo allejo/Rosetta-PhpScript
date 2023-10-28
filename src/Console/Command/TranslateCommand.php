@@ -46,8 +46,7 @@ class TranslateCommand extends Command
         $inputFileOrDir = $input->getArgument('inputFileOrDir');
         $outputDir = $input->getArgument('outputDir');
 
-        if (!file_exists($inputFileOrDir))
-        {
+        if (!file_exists($inputFileOrDir)) {
             $io->error("File or directory does not exist: {$inputFileOrDir}");
 
             return Command::FAILURE;
@@ -55,12 +54,9 @@ class TranslateCommand extends Command
 
         $files = [];
 
-        if (is_file($inputFileOrDir))
-        {
+        if (is_file($inputFileOrDir)) {
             $files[] = $inputFileOrDir;
-        }
-        else
-        {
+        } else {
             $exclusions = $input->getOption('exclude');
 
             $finder = new Finder();
@@ -72,18 +68,14 @@ class TranslateCommand extends Command
                 ->files()
             ;
 
-            foreach ($finder->getIterator() as $file)
-            {
+            foreach ($finder->getIterator() as $file) {
                 $files[] = $file->getRealPath();
             }
         }
 
-        if (\Phar::running() !== '')
-        {
+        if (\Phar::running() !== '') {
             $cwd = \Phar::running();
-        }
-        else
-        {
+        } else {
             $cwd = realpath(self::PROJECT_ROOT);
         }
 
@@ -95,21 +87,15 @@ class TranslateCommand extends Command
             2 * 60, // 2 minutes (in seconds)
         );
 
-        try
-        {
+        try {
             $jsProcess->mustRun(static function ($type, $buffer) use ($io) {
-                if ($type === Process::ERR)
-                {
+                if ($type === Process::ERR) {
                     $io->error($buffer);
-                }
-                else
-                {
+                } else {
                     $io->write($buffer);
                 }
             });
-        }
-        catch (ProcessFailedException $exception)
-        {
+        } catch (ProcessFailedException $exception) {
             $io->error($exception->getMessage());
 
             return Command::FAILURE;
@@ -128,17 +114,13 @@ class TranslateCommand extends Command
 
         $transformer = $this->getTransformer($input->getOption('config'));
 
-        foreach ($babelASTs as $babelAST)
-        {
+        foreach ($babelASTs as $babelAST) {
             $astRaw = file_get_contents($babelAST->getRealPath());
             $filename = $babelAST->getBasename('.json') . '.php';
 
-            try
-            {
+            try {
                 $phpSrc = $transformer->fromJsonStringToPhp($astRaw);
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $io->error("Error writing file ({$filename}): {$e->getMessage()}\n");
 
                 continue;
@@ -162,12 +144,10 @@ class TranslateCommand extends Command
 
     private function getTransformer(?string $configPath): Transformer
     {
-        if ($configPath && file_exists($configPath))
-        {
+        if ($configPath && file_exists($configPath)) {
             $returnValue = (include $configPath);
 
-            if (!$returnValue instanceof Transformer)
-            {
+            if (!$returnValue instanceof Transformer) {
                 throw new \InvalidArgumentException("The return value from the given configuration file ({$configPath}) is not a Transformer object.");
             }
 

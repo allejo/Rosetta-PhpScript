@@ -30,17 +30,13 @@ class BinaryExpression implements PhpConstructInterface
         $rightConstruct = $transformer->fromBabelAstToPhpAst($babelConstruct->right);
         $result = null;
 
-        if ($babelConstruct->operator === '+')
-        {
+        if ($babelConstruct->operator === '+') {
             $areBothStrings = $leftConstruct instanceof String_ && $rightConstruct instanceof String_;
             $oneIsConcat = $leftConstruct instanceof Concat || $rightConstruct instanceof Concat;
 
-            if ($areBothStrings || $oneIsConcat)
-            {
+            if ($areBothStrings || $oneIsConcat) {
                 $result = new Concat($leftConstruct, $rightConstruct);
-            }
-            else
-            {
+            } else {
                 $result = new Plus($leftConstruct, $rightConstruct);
             }
         }

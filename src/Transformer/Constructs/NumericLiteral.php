@@ -29,13 +29,11 @@ class NumericLiteral implements PhpConstructInterface
      */
     public static function fromBabel($babelConstruct, Transformer $transformer)
     {
-        if (is_float($babelConstruct->value))
-        {
+        if (is_float($babelConstruct->value)) {
             return new DNumber($babelConstruct->value);
         }
 
-        if (is_int($babelConstruct->value))
-        {
+        if (is_int($babelConstruct->value)) {
             return new LNumber($babelConstruct->value);
         }
 

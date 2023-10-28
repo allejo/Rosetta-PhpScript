@@ -28,8 +28,7 @@ class Identifier implements PhpConstructInterface
     public static function fromBabel($babelConstruct, Transformer $transformer)
     {
         // `undefined` in JS according to Babel is just a special identifier
-        if ($babelConstruct->name === 'undefined')
-        {
+        if ($babelConstruct->name === 'undefined') {
             return PhpAstHelpers::makeNullAst();
         }
 

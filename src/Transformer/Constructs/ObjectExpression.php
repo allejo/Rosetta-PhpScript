@@ -30,10 +30,8 @@ class ObjectExpression implements PhpConstructInterface
         /** @var ArrayItem[] $items */
         $items = [];
 
-        foreach ($babelConstruct->properties as $property)
-        {
-            if ($property->key->type !== 'Identifier')
-            {
+        foreach ($babelConstruct->properties as $property) {
+            if ($property->key->type !== 'Identifier') {
                 continue;
             }
 

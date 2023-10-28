@@ -37,21 +37,15 @@ class MemberExpression implements PhpConstructInterface
         $property = $babelConstruct->property;
 
         // In JS, a computed property is `a[b]` meaning we should translate this to a PHP AST object
-        if ($babelConstruct->computed)
-        {
+        if ($babelConstruct->computed) {
             $phpProperty = $transformer->fromBabelAstToPhpAst($babelConstruct->property);
-        }
-        elseif ($property->type === 'PrivateName')
-        {
+        } elseif ($property->type === 'PrivateName') {
             $phpProperty = $property->id->name;
-        }
-        elseif ($property->type === 'Identifier')
-        {
+        } elseif ($property->type === 'Identifier') {
             $phpProperty = $property->name;
         }
 
-        if (!isset($phpProperty))
-        {
+        if (!isset($phpProperty)) {
             throw new UnsupportedConstructException("Could not handle given property type for Babel construct of type {$babelConstruct->type}");
         }
 

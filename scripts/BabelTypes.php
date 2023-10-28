@@ -24,8 +24,7 @@ function sanitizeClassName($name): string
 {
     $reservedClassNames = ['Class', 'Function'];
 
-    if (in_array($name, $reservedClassNames, true))
-    {
+    if (in_array($name, $reservedClassNames, true)) {
         return $name . '_';
     }
 
@@ -52,8 +51,7 @@ $re = '/^(interface .+{[\s\S][^}]+})/m';
 $interfaces = [];
 preg_match_all($re, $spec, $interfaces, PREG_SET_ORDER, 0);
 
-foreach ($interfaces as $matches)
-{
+foreach ($interfaces as $matches) {
     $interface = explode("\n", $matches[1]);
     $header = $interface[0];
     $body = array_slice($interface, 1, count($interface) - 2);
@@ -65,8 +63,7 @@ foreach ($interfaces as $matches)
     $bodyRe = '/^\s+(?P<PropertyName>\w+)(?P<Nullable>\?)?:? (?P<DataType>["\w\W][^;]+);?(?:.+)?$/m';
     $bodyParts = [];
 
-    foreach ($body as $line)
-    {
+    foreach ($body as $line) {
         $bodyPartsLine = [];
         preg_match_all($bodyRe, $line, $bodyPartsLine, PREG_SET_ORDER, 0);
         $bodyParts[] = $bodyPartsLine;
@@ -79,32 +76,26 @@ foreach ($interfaces as $matches)
     $extendsStr = str_replace(' ', '', $extendsStr);
     $extends = $extendsStr ? explode(',', $extendsStr) : [];
 
-    if (count($extends) > 1)
-    {
+    if (count($extends) > 1) {
         printf("{$className} has multiple extends\n");
     }
 
     $classBody = '';
     $outputFile = sprintf('%s/../src/Babel/%s.php', __DIR__, $className);
 
-    if (in_array($className, $ignoreList, true))
-    {
+    if (in_array($className, $ignoreList, true)) {
         printf("Skipping body for {$className}... PLEASE DO MANUALLY\n");
 
-        if (file_exists($outputFile))
-        {
+        if (file_exists($outputFile)) {
             continue;
         }
-    }
-    else
-    {
+    } else {
         $classBody = implode("\n\n", array_map(static function ($parts) use ($className, $propTemplate) {
             $propName = $parts[0]['PropertyName'];
             $dataType = $parts[0]['DataType'];
             $dataType = patches($className, $propName, $dataType);
 
-            if ($dataType[0] === '"' && $dataType[-1] === '"' && substr_count($dataType, '"') === 2)
-            {
+            if ($dataType[0] === '"' && $dataType[-1] === '"' && substr_count($dataType, '"') === 2) {
                 return sprintf('public $%s = %s;', $propName, $dataType);
             }
 
@@ -133,8 +124,7 @@ $placeholderClasses = [
     ['Statement', 'Node'],
 ];
 
-foreach ($placeholderClasses as $placeholderClass)
-{
+foreach ($placeholderClasses as $placeholderClass) {
     $output = strtr($fileTemplate, [
         '{ClassName}' => $placeholderClass[0],
         '{ClassSuffix}' => 'extends ' . $placeholderClass[1],

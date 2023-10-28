@@ -26,8 +26,7 @@ class PhpAstFixtures
             ->files()
         ;
 
-        foreach ($phpFiles as $phpFile)
-        {
+        foreach ($phpFiles as $phpFile) {
             $content = $phpFile->getContents();
             $ast = $parser->parse($content);
             $targetFile = self::TESTS_DIR . '/fixtures/php-ast/' . $phpFile->getBasename('.php') . '.json';

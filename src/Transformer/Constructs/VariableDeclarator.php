@@ -30,23 +30,20 @@ class VariableDeclarator implements PhpConstructInterface
         $variable = new Variable($babelConstruct->id->name);
         $value = null;
 
-        if ($babelConstruct->init !== null)
-        {
+        if ($babelConstruct->init !== null) {
             $value = $transformer->fromBabelAstToPhpAst($babelConstruct->init);
         }
 
         $addWarning = false;
 
-        if ($value === null)
-        {
+        if ($value === null) {
             $value = PhpAstHelpers::makeNullAst();
             $addWarning = true;
         }
 
         $exp = new Expression(new Assign($variable, $value));
 
-        if ($addWarning)
-        {
+        if ($addWarning) {
             $msg = sprintf('Rosetta-PhpScript :: Unsupported variable type, defaulting to null (%s)', $babelConstruct->init->type);
             $exp->setDocComment(new Doc($msg));
         }

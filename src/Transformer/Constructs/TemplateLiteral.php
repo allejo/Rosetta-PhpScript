@@ -36,33 +36,26 @@ class TemplateLiteral implements PhpConstructInterface
         $concatenated = null;
         $hasExpressions = false;
 
-        foreach ($babelConstruct->expressions as $expression)
-        {
+        foreach ($babelConstruct->expressions as $expression) {
             $hasExpressions = true;
 
-            if ($expression->type === 'Identifier')
-            {
+            if ($expression->type === 'Identifier') {
                 $position = $expression->loc->start;
                 $parts[$position->line][$position->column] = $transformer->fromBabelAstToPhpAst($expression);
             }
         }
 
-        foreach ($babelConstruct->quasis as $quasi)
-        {
+        foreach ($babelConstruct->quasis as $quasi) {
             $position = $quasi->loc->start;
 
-            if ($hasExpressions)
-            {
+            if ($hasExpressions) {
                 $parts[$position->line][$position->column] = new EncapsedStringPart($quasi->value->cooked);
-            }
-            else
-            {
+            } else {
                 $concatenated .= $quasi->value->cooked;
             }
         }
 
-        if ($hasExpressions)
-        {
+        if ($hasExpressions) {
             ArrayUtils::recursiveKsort($parts);
 
             return new Encapsed(ArrayUtils::flatten($parts));

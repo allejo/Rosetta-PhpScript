@@ -84,26 +84,21 @@ class Transformer
      */
     public function fromBabelAstToPhpAst(?\stdClass $babelAst)
     {
-        if ($babelAst === null)
-        {
+        if ($babelAst === null) {
             return null;
         }
 
         $transformers = $this->getTransformers();
 
-        if (!array_key_exists($babelAst->type, $transformers))
-        {
+        if (!array_key_exists($babelAst->type, $transformers)) {
             return PhpAstHelpers::makeNullAst();
         }
 
         $transformer = $transformers[$babelAst->type];
 
-        try
-        {
+        try {
             return $transformer::fromBabel($babelAst, $this);
-        }
-        catch (UnsupportedConstructException $e)
-        {
+        } catch (UnsupportedConstructException $e) {
             $event = new UnsupportedConstructEvent($babelAst);
 
             /** @var null|UnsupportedConstructEvent $construct */
@@ -125,8 +120,7 @@ class Transformer
     {
         $file = json_decode($json, null, 512, JSON_THROW_ON_ERROR);
 
-        if (!property_exists($file, 'program'))
-        {
+        if (!property_exists($file, 'program')) {
             throw new UnsupportedConstructException('No `program` definition found in this AST.');
         }
 
@@ -134,12 +128,10 @@ class Transformer
         $program = $file->program;
         $output = [];
 
-        foreach ($program->body as $element)
-        {
+        foreach ($program->body as $element) {
             $transformed = $this->fromBabelAstToPhpAst($element);
 
-            if ($transformed === null)
-            {
+            if ($transformed === null) {
                 continue;
             }
 
@@ -174,8 +166,7 @@ class Transformer
      */
     public function registerTransformer(string $constructCls, bool $force = false): bool
     {
-        if ($force === false && isset(self::$builtinTransformers[$constructCls::getConstructName()]))
-        {
+        if ($force === false && isset(self::$builtinTransformers[$constructCls::getConstructName()])) {
             return false;
         }
 
@@ -204,8 +195,7 @@ class Transformer
     {
         static $allTransformers = [];
 
-        if ($this->updateTransformersList)
-        {
+        if ($this->updateTransformersList) {
             $allTransformers = array_merge(self::$builtinTransformers, $this->userTransformers);
             $this->updateTransformersList = false;
         }

@@ -18,6 +18,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * @internal
+ *
  * @covers Transformer
  */
 class TransformerTest extends TestCase
@@ -36,8 +37,7 @@ class TransformerTest extends TestCase
 
     public function dataProvider_testTransformer(): iterable
     {
-        foreach ($this->getBabelFixturePaths() as $babelFixture)
-        {
+        foreach ($this->getBabelFixturePaths() as $babelFixture) {
             $fileNameNoExt = $babelFixture->getBasename('.json');
 
             yield [

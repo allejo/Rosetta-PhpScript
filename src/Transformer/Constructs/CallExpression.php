@@ -35,8 +35,7 @@ class CallExpression implements PhpConstructInterface
      */
     public static function fromBabel($babelConstruct, Transformer $transformer): FuncCall|MethodCall
     {
-        if ($babelConstruct->type !== 'CallExpression')
-        {
+        if ($babelConstruct->type !== 'CallExpression') {
             throw new UnsupportedConstructException("No support for handling a callee of type {$babelConstruct->type}");
         }
 
@@ -44,13 +43,11 @@ class CallExpression implements PhpConstructInterface
         $callee = $transformer->fromBabelAstToPhpAst($babelConstruct->callee);
         $args = array_map(static fn ($arg) => $transformer->fromBabelAstToPhpAst($arg), $babelConstruct->arguments);
 
-        if ($callee instanceof PropertyFetch)
-        {
+        if ($callee instanceof PropertyFetch) {
             return new MethodCall($callee->var, $callee->name, $args);
         }
 
-        if ($callee instanceof Variable)
-        {
+        if ($callee instanceof Variable) {
             return new FuncCall(new Name($callee->name), $args);
         }
 

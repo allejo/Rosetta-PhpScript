@@ -31,8 +31,7 @@ class ExpressionStatement implements PhpConstructInterface
      */
     public static function fromBabel($babelConstruct, Transformer $transformer)
     {
-        return match ($babelConstruct->expression->type)
-        {
+        return match ($babelConstruct->expression->type) {
             'AssignmentExpression', 'CallExpression' => new Expression($transformer->fromBabelAstToPhpAst($babelConstruct->expression)),
             default => throw new UnsupportedConstructException(sprintf('No support for transforming a ExpressionStatement from a %s', $babelConstruct->expression::class)),
         };

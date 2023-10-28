@@ -27,10 +27,8 @@ class FunctionDeclaration implements PhpConstructInterface
     {
         $function = new Function_($babelConstruct->id->name);
 
-        foreach ($babelConstruct->params as $param)
-        {
-            if ($param->type !== 'Identifier')
-            {
+        foreach ($babelConstruct->params as $param) {
+            if ($param->type !== 'Identifier') {
                 continue;
             }
 

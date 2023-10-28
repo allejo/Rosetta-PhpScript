@@ -33,10 +33,8 @@ abstract class ArrayUtils
 
     public static function recursiveKsort(array &$arr): void
     {
-        foreach ($arr as &$item)
-        {
-            if (is_array($item))
-            {
+        foreach ($arr as &$item) {
+            if (is_array($item)) {
                 self::recursiveKsort($item);
             }
         }

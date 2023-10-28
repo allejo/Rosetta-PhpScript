@@ -27,8 +27,7 @@ class ArrayExpression implements PhpConstructInterface
         /** @var ArrayItem[] $items */
         $items = [];
 
-        foreach ($babelConstruct->elements as $element)
-        {
+        foreach ($babelConstruct->elements as $element) {
             $element = $transformer->fromBabelAstToPhpAst($element);
             $items[] = new ArrayItem($element);
         }
